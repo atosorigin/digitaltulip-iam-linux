@@ -1,0 +1,12 @@
+---
+# Uninstall openam bits 
+
+- service: name=openam state=stopped
+- name: Clean up old install dirs in case this is a re-install
+  file: path="{{download_dir}}/openam" state=absent
+
+# - file: path="{{ install_root}}/openam" state=absent
+- file: path="{{home_dir}}/.openamcfg" state=absent
+- file: path="{{ install_root }}/ssoadmin" state=absent
+- file: path="{{ install_root }}/ssoconfigtool" state=absent
+- file: path="{{ tomcat_openam_dir }}/webapps/openam"  state=absent 

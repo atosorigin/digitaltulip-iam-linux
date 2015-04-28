@@ -1,0 +1,53 @@
+---
+# This role creates the demo forgerock user account that will be used for the remainder of the install
+
+- name: Create {{owner_group}} group
+  group: name={{owner_group}} state=present system=yes
+
+- name: Create fr demo user
+  user: name=fr system=yes comment="ForgeRock Demo Account" shell='/bin/bash' groups={{owner_group}}
+
+# If you are running on a UNIX based system this should work...
+- name: Appending your ~/.ssh/id_rsa.pub key to the fr demo user 
+  authorized_key: user=fr key="{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
+ 
+# Add your .ssh key under files/ and update this command to include it.
+# This will allow you to ssh to the fr user account
+#- name: Append any .ssh keys in roles/create-fr-user/files 
+#  authorized_key: user="{{fr_user}}" key="{{item}}"
+#  with_file:
+#    - id_rsa.pub 
+
+# Escaping is needed here to handle the colon in the NOPASSWD line
+#- name: Add fr user to sudoers
+#  action: 'lineinfile
+#          dest=/etc/sudoers
+#          state=present
+#          regexp="\%^fr"
+#          line="fr ALL=NOPASSWD: ALL"'
+          
+# Fully quoted because of the ': ' on the line. See the Gotchas in the Ansible YAML docs.
+- lineinfile: "dest=/etc/sudoers state=present regexp='^%fr' line='%fr ALL=(ALL) NOPASSWD: ALL'"
+
+  
+- name: create dirs
+  file: path={{home_dir}}/{{item}} state=directory owner=fr
+  with_items:
+   - etc
+   - bin
+  
+- name: create password file for ssoadm command
+  template: src=amadmin_pw dest={{home_dir}}/etc/amadmin_pw mode=0400 owner=fr
+  
+- name: copy bin helpers
+  template: src="{{item}}" dest="{{home_dir}}/bin/{{item}}" mode=0755 owner=fr
+  with_items:
+    - list-policies
+    - import-policies
+  
+- name: set up bashrc 
+  template: src=bashrc dest={{home_dir}}/.bashrc
+  
+- name: set up bash login 
+  template: src=bash_profile dest={{home_dir}}/.bash_profile
+  

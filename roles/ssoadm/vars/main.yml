@@ -1,0 +1,1 @@
+ssoadmin: '    -D"com.iplanet.am.naming.map.site.to.server=https://{{openam_fqdn}}:443/openam=http://{{openam_fqdn}}:{{openam_server_port}}/openam" \\' 

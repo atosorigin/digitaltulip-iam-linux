@@ -1,0 +1,78 @@
+# Defines where to find the various ForgeRock binaries
+# This downloads major .0 releases from the ForgeRock maven repo
+
+
+
+maven: "http://maven.forgerock.org/repo/releases/org/forgerock"
+
+# DJ
+# Where we can grab nightly builds
+opendj_version: "2.6.0"
+opendj_maven_url: "{{maven}}/opendj/opendj-server/{{opendj_version}}"
+#opendj_major: "opendj-server-{{opendj_version}}" 
+opendj_zip: "opendj-server-{{opendj_version}}.zip"
+opendj_download_url: "{{opendj_maven_url}}/{{opendj_zip}}"
+
+
+# OpenAM builds
+openam_version: "11.0.0"
+openam_maven: "{{maven}}/openam/openam-distribution-kit/{{openam_version}}"
+openam_zip_file: "openam-distribution-kit-{{openam_version}}.zip"
+openam_configuration_zip: "SSOConfiguratorTools-{{openam_version}}.zip"
+openam_download_url: "{{openam_maven}}/{{openam_zip_file}}"
+# Configurator License switch is for AM 12 
+#openam_license_switch: "--acceptLicense"
+openam_license_switch: ""
+
+# CentOS comes bundled with 2.2 - not 2.4
+apache_agent_version: "apache_v22_Linux_64_agent_4.0.0-SNAPSHOT"
+#apache_agent_version: "apache_v22_Linux_64_agent_4.0.0-SNAPSHOT"
+apache_agent_download_url: "http://download.forgerock.org/downloads/openam/webagents/nightly/Linux/{{ apache_agent_version }}.zip"
+
+
+# OpenIG
+openig_version: "3.1.0"
+openig_maven: "{{maven}}/openig/openig-war/{{openig_version}}"
+openig_zip: "openig-war-{{openig_version}}.war"
+openig_download_url: "{{openig_maven}}/{{openig_zip}}"
+
+
+## Things that are not in Maven we get from Jenkins
+
+jenkins: "https://builds.forgerock.org/view"
+
+
+# openidm
+openidm_version: "3.1.0-SNAPSHOT"
+openidm_zip: "openidm-{{openidm_version}}.zip"
+openidm_download_url: "{{jenkins}}/OpenIDM/job/OpenIDM/lastSuccessfulBuild/artifact/openidm-zip/target/{{openidm_zip}}"
+
+
+
+
+# Agents - cant get them on maven right now - so use Jenkins
+
+jee_agents_jenkins: "{{jenkins}}/Nightly%20agents/job/OpenAM%20Maven%20JEE%20Agents/lastSuccessfulBuild"
+
+
+# Tomcat - currently agent 4.0.0
+tomcat_agent_version: "jee-agents-distribution-tomcat-v6-4.0.0-SNAPSHOT"
+tomcat_jenkins: "{{jee_agents_jenkins}}/org.forgerock.openam.agents$jee-agents-distribution-tomcat-v6/artifact/org.forgerock.openam.agents/jee-agents-distribution-tomcat-v6/4.0.0-SNAPSHOT"
+tomcat_agent_zip: "{{tomcat_agent_version}}.zip"
+tomcat_agent_download_url: "{{tomcat_jenkins}}/{{tomcat_agent_zip}}"
+
+# Apache Agent
+
+apache_agent_version: apache_v24_Linux_64_agent_4.0.0-SNAPSHOT
+apache_agent_zip: "{{apache_agent_version}}.zip"
+apache_agent_download_url: "http://download.forgerock.org/downloads/openam/webagents/nightly/Linux/{{apache_agent_zip}}"
+
+
+
+# HA Proxy
+# DEPRECATED - Use the package version. Centos7 and Fedora now have 1.5 with SSL
+#
+# The rpm repos dont have the latest version needed to support SSL - so use a custom version
+# Not needed anymore - as Fedora and Centos 7 has 1.5 with SSL. Keep this for posterity
+#haproxy_rpm: "haproxy-1.5-dev19.el6.x86_64.rpm"
+#haproxy_download_url: "http://silverdire.com/files/repo/el6/x86_64/{{ haproxy_rpm }}"

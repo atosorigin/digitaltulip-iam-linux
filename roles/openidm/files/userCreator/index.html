@@ -1,0 +1,21 @@
+<html>
+    <head>
+        <script src="jquery.js"></script>
+        <script src="underscore.js"></script>
+        <script src="require.js"></script>
+        <script src="createname.js"></script>
+        <script src="app.js"></script>
+    </head>
+    <body>
+        # Users:
+        <select id="numUsers">
+            <option val="10">1</option>
+            <option val="10">10</option>
+            <option val="100" selected>100</option>
+            <option val="1000" >1000</option>
+        </select>&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="button" onclick="createUsers();" value="Create Users"/>
+        <br/><hr/><br/>
+        <div id="users"></div>
+    </body>
+</html>

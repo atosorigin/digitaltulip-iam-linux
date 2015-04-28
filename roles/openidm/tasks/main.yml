@@ -1,0 +1,42 @@
+---
+# This role installs openidm
+
+
+# download openidm or used cached copy
+- include: ../../download.yml download_file={{ openidm_zip }} download_url={{ openidm_download_url }}
+
+- name: Disable openidmservice
+  service: name=openidm state=stopped enabled=no
+  register: command_result
+  failed_when: command_result|failed and 'no service' not in command_result.msg
+
+- name: remove any old openidm instance 
+  file: path={{install_root}}/openidm state=absent
+
+- name: unpack openidm
+  command: unzip {{download_dir }}/{{openidm_zip}} -d {{ tomcat_parent }}
+
+- name: copy contents of file folder 
+  copy: src=conf/{{item}} dest={{install_root}}/openidm/conf/{{item}}
+  with_items: 
+    - authentication.json
+    - managed.json
+    - sync.json
+
+- name: copy boot to use custom ports
+  template: src=boot.properties dest={{install_root}}/openidm/conf/boot/boot.properties
+
+- name: config.props fix up
+  template: src=config.properties dest={{install_root}}/openidm/conf/config.properties
+
+- name: adldap provisioner
+  template: src=provisioner.openicf-adldap.json dest={{install_root}}/openidm/conf/provisioner.openicf-adldap.json
+
+- name: create service start up script
+  template: src=openidm dest=/etc/init.d/openidm  mode=0755
+
+- name: Change ownership of openidm to fr user
+  file: path={{ install_root }}/openidm owner={{ fr_user }} state=directory recurse=yes
+
+- name: Enable openidm service
+  service: name=openidm state=restarted enabled=yes

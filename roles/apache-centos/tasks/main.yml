@@ -1,0 +1,35 @@
+---
+# This role installs Apache httpd on Redhat type image
+
+- name: Install Apache
+  yum: name={{ item }} state=latest
+  environment:
+    proxy_env
+  with_items:
+   - httpd
+   - mod_ssl
+ 
+# TODO: This should be templated, not copied   
+- name: copy httpd.conf
+  copy: src=httpd.conf dest=/etc/httpd/conf owner=apache group=root mode=0644
+  
+- name: copy sample page
+  copy: src=index.html dest=/var/www/html owner=apache group=root mode=0644
+
+- name: create self-signed SSL cert for apache
+  command: creates=/etc/pki/tls/cert/apacheserver.crt openssl req -new -nodes -x509 -subj "/C=CA/ST=AB/L=Calgary/O=ForgeRock/CN=openam.example.com" -days 3650 
+    -keyout /etc/pki/tls/private/apacheserver.key -out /etc/pki/tls/certs/apacheserver.crt 
+    -extensions v3_ca 
+
+# We ignore errors here because this is not idempotent  
+- name: Import the cert into java keystore for openam use
+  command:  keytool -importcert -noprompt -alias openam.example.com -storepass changeit -file /etc/pki/tls/certs/apacheserver.crt -trustcacerts -keystore /etc/pki/java/cacerts
+  ignore_errors: yes
+  
+# Make user Apache SSL does not start up - it will collide with haproxy
+- name: Disable apache ssl
+  command: chdir="/etc/httpd/conf.d" mv ssl.conf ssl.conf.disable
+  ignore_errors: yes
+  
+- name: http service state
+  service: name=httpd state=restarted enabled=yes

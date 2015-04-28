@@ -1,0 +1,23 @@
+---
+# task that checks to see if a file has been staged, 
+# And skips the download if it finds it staged, otherwise it downloads it
+# It leaves the file  in {{download_dir}}
+# vars:  
+# {{download_file}} - name of archive file
+# {{download_url}}  - Complete URL for download (includes the file name as well)
+# Pass in: download_file - the name of the file to download 
+# download_url: The URL to download from
+
+- debug: msg="download_path {{ download_dir }} destination {{download_dir}}/{{download_file}} url {{download_url}}"
+
+- name: check download path is present  
+  file: path={{download_dir}} state=directory
+
+- name: Check for staged  bits - so we can skip download
+  stat: path={{download_dir}}/{{download_file}}
+  register: staged_present
+
+- name: No staged archive found. Downloading
+  get_url: url="{{download_url}}" dest="{{download_dir}}/{{download_file}}"
+  when: staged_present.stat.exists == false
+ 

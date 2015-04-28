@@ -1,0 +1,112 @@
+{
+    "objects" : [
+        {
+            "name" : "user",
+            "properties" : [
+                {
+                    "name" : "effectiveRoles",
+                    "type" : "virtual",
+                    "onRetrieve" : {
+                        "type" : "text/javascript",
+                        "file" : "roles/effectiveRoles.js",
+                        "rolesPropName" : "roles"
+                    }
+                },
+                {
+                    "name" : "effectiveAssignments",
+                    "type" : "virtual",
+                    "onRetrieve" : {
+                        "type" : "text/javascript",
+                        "file" : "roles/effectiveAssignments.js",
+                        "effectiveRolesPropName" : "effectiveRoles"
+                    }
+                }
+            ],
+            "onCreate" : {
+                "type" : "text/javascript",
+                "file" : "ui/onCreate-user-set-default-fields.js"
+            },
+            "onDelete" : {
+                "type" : "text/javascript",
+                "file" : "ui/onDelete-user-cleanup.js"
+            },
+            "schema" : {
+                "$schema" : "http://forgerock.org/json-schema#",
+                "type" : "object",
+                "title" : "Users",
+                "description" : "User Data",
+                "properties" : {
+                    "userName" : {
+                        "description" : "",
+                        "title" : "User Name",
+                        "viewable" : true,
+                        "searchable" : true,
+                        "type" : "string"
+                    },
+                    "mail" : {
+                        "description" : "",
+                        "title" : "Email Address",
+                        "viewable" : true,
+                        "searchable" : true,
+                        "type" : "string"
+                    },
+                    "givenName" : {
+                        "description" : "",
+                        "title" : "First Name",
+                        "viewable" : true,
+                        "searchable" : true,
+                        "type" : "string"
+                    },
+                    "sn" : {
+                        "description" : "",
+                        "title" : "Last Name",
+                        "viewable" : true,
+                        "searchable" : true,
+                        "type" : "string"
+                    },
+                    "firstname" : {
+                        "description" : "",
+                        "title" : "First Name",
+                        "viewable" : true,
+                        "searchable" : true,
+                        "type" : "string"
+                    }
+                },
+                "required" : [
+                    "userName",
+                    "mail",
+                    "givenName",
+                    "sn",
+                    "firstname"
+                ],
+                "order" : [
+                    "userName",
+                    "mail",
+                    "givenName",
+                    "sn",
+                    "firstname"
+                ]
+            }
+        },
+        {
+            "name" : "role",
+            "postCreate" : {
+                "type" : "text/javascript",
+                "file" : "roles/update-users-of-role.js"
+            },
+            "postUpdate" : {
+                "type" : "text/javascript",
+                "file" : "roles/update-users-of-role.js"
+            },
+            "postDelete" : {
+                "type" : "text/javascript",
+                "file" : "roles/update-users-of-role.js"
+            },
+            "onDelete" : {
+                "type" : "text/javascript",
+                "file" : "roles/onDelete-roles.js"
+            }
+        }
+    ],
+    "_id" : "managed"
+}

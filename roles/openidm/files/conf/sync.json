@@ -1,0 +1,96 @@
+{
+    "mappings" : [
+        {
+            "name" : "systemADAccounts_managedUser",
+            "source" : "system/ad/account",
+            "target" : "managed/user",
+            "properties" : [
+                {
+                    "source" : "sAMAccountName",
+                    "target" : "userName"
+                },
+                {
+                    "source" : "__NAME__",
+                    "target" : "__NAME__"
+                },
+                {
+                    "target" : "mail",
+                    "source" : "mail"
+                },
+                {
+                    "target" : "givenName",
+                    "source" : "givenName"
+                },
+                {
+                    "target" : "sn",
+                    "source" : "sn"
+                }
+            ]
+        },
+        {
+            "name" : "managedUser_systemADAccounts",
+            "source" : "managed/user",
+            "target" : "system/ad/account",
+            "links" : "systemADAccounts_managedUser",
+            "properties" : [
+                {
+                    "source" : "userName",
+                    "target" : "sAMAccountName"
+                },
+                {
+                    "source" : "lastname",
+                    "target" : "sn"
+                },
+                {
+                    "source" : "firstname",
+                    "target" : "givenName"
+                },
+                {
+                    "source" : "__NAME__",
+                    "target" : "__NAME__"
+                },
+                {
+                    "target" : "memberOf",
+                    "source" : "memberOf"
+                },
+                {
+                    "target" : "dn"
+                }
+            ],
+            "policies" : [
+                {
+                    "situation" : "CONFIRMED",
+                    "action" : "IGNORE"
+                },
+                {
+                    "situation" : "FOUND",
+                    "action" : "IGNORE"
+                },
+                {
+                    "situation" : "ABSENT",
+                    "action" : "CREATE"
+                },
+                {
+                    "situation" : "AMBIGUOUS",
+                    "action" : "IGNORE"
+                },
+                {
+                    "situation" : "MISSING",
+                    "action" : "IGNORE"
+                },
+                {
+                    "situation" : "SOURCE_MISSING",
+                    "action" : "IGNORE"
+                },
+                {
+                    "situation" : "UNQUALIFIED",
+                    "action" : "IGNORE"
+                },
+                {
+                    "situation" : "UNASSIGNED",
+                    "action" : "IGNORE"
+                }
+            ]
+        }
+    ]
+}

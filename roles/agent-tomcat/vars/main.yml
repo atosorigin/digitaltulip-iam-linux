@@ -1,0 +1,7 @@
+j2ee_agents_home: "{{install_root}}/j2ee_agents"
+agent_dirname: "tomcat_v6_agent"
+tomcat_agent_dir: "{{j2ee_agents_home}}/tomcat_v6_agent"
+agent_home: "{{ tomcat_agent_dir }}"
+tomcat_instance: "test"
+tomcat_instance_dir: "{{tomcat_parent}}/{{tomcat_instance}}"
+agent_instance_dir: "{{ tomcat_agent_dir}}"

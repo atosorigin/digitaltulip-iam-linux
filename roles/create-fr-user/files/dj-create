@@ -1,0 +1,49 @@
+# Test create command 
+curl -k --request PUT \
+ --header "X-OpenIDM-Username: user.0" \
+ --header "X-OpenIDM-Password: D1g1talTul1p" \
+ --header "Content-Type: application/json" \
+ --header "If-None-Match: *" \
+ --data '{ 
+  "_id": "newuser", 
+  "contactInformation": { 
+    "telephoneNumber": "+1 408 555 1212", 
+    "emailAddress": "newuser@example.com" 
+  }, 
+  "name": { 
+    "familyName": "New", 
+    "givenName": "User" 
+  }, 
+  "displayName": "New User"
+ 
+ }' \
+ https://openam.example.com:38443/users/newuser?_prettyPrint=true
+ 
+ 
+ # Set a password
+  
+ 
+ curl -k \
+ --request PUT \
+ --user user.0:D1g1talTul1p \
+ --header "Content-Type: application/json" \
+ --data '{  "userPassword": "Passw0rd" }' \
+https://openam.example.com:38443/users/newuser?_prettyPrint=true
+ 
+   
+   
+curl -k \
+ --request PATCH \
+ --user user.0:D1g1talTul1p \
+ --header "Content-Type: application/json" \
+ --data '[
+  {
+    "operation": "replace",
+    "field": "/userPassword",
+    "value": "Passw0rd"
+  }
+ ]' \
+https://openam.example.com:38443/users/newuser?_prettyPrint=true
+ 
+   
+   

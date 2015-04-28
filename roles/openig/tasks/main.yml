@@ -1,0 +1,29 @@
+---
+# Install OpenIG 
+# Assumes tomcat openig instance has been previously deployed
+# Pass tomcat_instance as a role param
+
+
+# download or used cached copy
+- include: ../../download.yml download_file="{{openig_zip}}" download_url="{{openig_download_url}}"
+    
+- service: name="{{ openig_service }}" state=stopped
+  
+- name: Remove the ROOT dir so we can install the gateway at the root 
+  file: path="{{tomcat_instance_dir}}/webapps/ROOT" state=absent
+  
+- name: Expand the gateway war file
+  command:  /usr/bin/unzip "{{download_dir}}/{{openig_zip}}" -d "{{tomcat_instance_dir}}/webapps/ROOT"
+  
+#- name: Copy web.xml to put in AM filter 
+#  copy:  src=web.xml dest=/home/fr/{{tomcat_instance}}/webapps/ROOT/WEB-INF/web.xml
+#  
+#- name: copy sample config.json for gateway
+#  file: path=/home/fr/.ForgeRock/OpenIG/ state=directory
+#
+#  
+#- name: copy sample config.json for gateway
+#  copy: src=config.json dest=/home/fr/.ForgeRock/OpenIG/config.json
+
+- name: restart tomcat
+  service: name="{{ openig_service }}" state=restarted

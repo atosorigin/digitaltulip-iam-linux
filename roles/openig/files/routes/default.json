@@ -1,0 +1,40 @@
+{  
+   "heap":{  
+      "objects":[  
+         {  
+            "name":"DefChain",
+            "type":"Chain",
+            "config":{  
+               "filters":[  
+
+               ],
+               "handler":"DefaultHandler"
+            }
+         },
+{
+    "name": "NascarPage",
+    "type": "StaticResponseHandler",
+    "config": {
+        "status": 200,
+        "entity": "<html><p><a
+                   href='/openid/login?provider=openam&goto=${urlEncode(exchange.request.uri)}'
+                   >OpenAM Login</a></p>
+                   <p><a
+                   href='/openid/login?provider=google&goto=${urlEncode(exchange.request.uri)}'
+                   >Google Login</a></p>
+                   </html>"
+    }
+}
+         {  
+            "name":"DefaultHandler",
+            "type":"ClientHandler",
+            "config":{  
+
+            }
+         }
+      ]
+   },
+   "name":"zDefault",
+   "handler":"DefChain",
+   "baseURI":"http://localhost:1080/"
+}

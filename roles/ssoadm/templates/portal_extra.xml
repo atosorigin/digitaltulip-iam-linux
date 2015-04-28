@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<EntityConfig entityID="passport-saml" hosted="false" xmlns="urn:sun:fm:SAML:2.0:entityconfig">
+    <SPSSOConfig>
+        <Attribute name="appLogoutUrl"/>
+        <Attribute name="spAdapterEnv"/>
+        <Attribute name="useIntroductionForIDPProxy"/>
+        <Attribute name="spAdapter"/>
+        <Attribute name="intermediateUrl"/>
+        <Attribute name="spAccountMapper"/>
+        <Attribute name="signingCertAlias"/>
+        <Attribute name="useIDPFinder"/>
+        <Attribute name="enableIDPProxy"/>
+        <Attribute name="encryptionCertAlias"/>
+        <Attribute name="spAuthncontextMapper"/>
+        <Attribute name="idpProxyCount"/>
+        <Attribute name="wantAttributeEncrypted"/>
+        <Attribute name="cotlist">
+            <Value>{{circleoftrust}}</Value>
+        </Attribute>
+        <Attribute name="ECPRequestIDPListFinderImpl"/>
+        <Attribute name="relayStateUrlList"/>
+        <Attribute name="idpProxyList"/>
+        <Attribute name="wantLogoutResponseSigned"/>
+        <Attribute name="saeSPLogoutUrl"/>
+        <Attribute name="basicAuthUser"/>
+        <Attribute name="wantPOSTResponseSigned"/>
+        <Attribute name="alwaysIdpProxy"/>
+        <Attribute name="spSessionSyncEnabled"/>
+        <Attribute name="spAuthncontextClassrefMapping"/>
+        <Attribute name="assertionTimeSkew"/>
+        <Attribute name="spDoNotWriteFederationInfo"/>
+        <Attribute name="wantAssertionEncrypted"/>
+        <Attribute name="basicAuthOn"/>
+        <Attribute name="useNameIDAsSPUserID"/>
+        <Attribute name="attributeMap">
+            <Value>cn=cn</Value>
+            <Value>uid=uid</Value>
+            <Value>givenName=givenName</Value>
+            <Value>sn=sn</Value>
+        </Attribute>
+        <Attribute name="autofedAttribute"/>
+        <Attribute name="saml2AuthModuleName"/>
+        <Attribute name="defaultRelayState"/>
+        <Attribute name="wantNameIDEncrypted"/>
+        <Attribute name="responseArtifactMessageEncoding">
+            <Value>URI</Value>
+        </Attribute>
+        <Attribute name="saeAppSecretList"/>
+        <Attribute name="localAuthURL"/>
+        <Attribute name="saeSPUrl"/>
+        <Attribute name="transientUser"/>
+        <Attribute name="autofedEnabled"/>
+        <Attribute name="wantMNIResponseSigned"/>
+        <Attribute name="wantLogoutRequestSigned"/>
+        <Attribute name="ECPRequestIDPListGetComplete"/>
+        <Attribute name="spAuthncontextComparisonType"/>
+        <Attribute name="basicAuthPassword"/>
+        <Attribute name="wantArtifactResponseSigned"/>
+        <Attribute name="spAttributeMapper"/>
+        <Attribute name="ECPRequestIDPList"/>
+        <Attribute name="wantMNIRequestSigned"/>
+        <Attribute name="metaAlias"/>
+    </SPSSOConfig>
+</EntityConfig>

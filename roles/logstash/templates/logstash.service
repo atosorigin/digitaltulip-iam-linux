@@ -1,0 +1,13 @@
+# Not used right now
+[Unit]
+Description=OpenAM 
+After=remote-fs.target nss-lookup.target
+
+[Service]
+Type=simple
+ExecStart={{install_root}}/{{logstash_version}}/bin/logstash -f {install_root}}/logstash/conf
+User={{fr_user}}
+Environment="JAVA_OPTS=-Djava.awt.headless=true -Xmx512M"
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,3 @@
+tomcat_instance: openig
+openig_service: "openig"
+#tomcat_instance_dir: "/var/lib/tomcats/{{tomcat_instance}}"

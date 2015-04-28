@@ -1,0 +1,37 @@
+#!/bin/sh 
+# Commands to generate keystore and client certs for testing x.509 OpenAM certificate authn
+# See https://wikis.forgerock.org/confluence/display/openam/X.509+Authentication%3A+Including+SmartCards
+
+# Generate CA trust cert
+openssl req -x509 -sha256 -nodes -days 1826 -newkey rsa:2048 -subj "/C=CA/ST=AB/L=Calgary/O=Acme/CN=Trust CA"  -keyout TRUST.key -out TRUST.crt
+#openssl x509 -in TRUST.crt -noout -text
+
+# Generate client and server certs
+openssl genrsa -out NEW_SERVER.key 2048
+openssl genrsa -out NEW_CLIENT.key 2048
+
+# Gen server signing request. Not CN must equal the fqdn
+openssl req -sha256 -new -key NEW_SERVER.key -out NEW_SERVER.req -subj "/C=CA/ST=AB/L=Calgary/O=Acme/CN=openam.example.com"
+
+# Gen for client. THe CN must match the user name 
+# todo: emai
+openssl req -sha256 -new -key NEW_CLIENT.key -out NEW_CLIENT.req -subj "/C=CA/ST=AB/L=Calgary/O=Acme/CN=wstrange"
+
+# Now sign the certs 
+openssl x509 -sha256 -req -in NEW_SERVER.req -CA TRUST.crt -CAkey TRUST.key  -extensions server -days 365 -outform PEM -out NEW_SERVER.crt
+openssl x509 -sha256 -req -in NEW_CLIENT.req -CA TRUST.crt -CAkey TRUST.key -extensions server -days 365 -outform PEM -out NEW_CLIENT.crt
+
+# Create PKS keystore 
+openssl pkcs12 -export -in NEW_SERVER.crt -inkey NEW_SERVER.key -out NEW_SERVER.p12 -name NEW_SERVER -password pass:password
+openssl pkcs12 -export -in NEW_CLIENT.crt -inkey NEW_CLIENT.key -out NEW_CLIENT.p12 -name NEW_CLIENT -password pass:password
+
+$JAVA_HOME/bin/keytool  -importkeystore -deststorepass password  -destkeypass password -destkeystore \
+MYKEYSTORE.jks  -srckeystore NEW_SERVER.p12 -srcstoretype PKCS12 -srcstorepass \
+password -alias NEW_SERVER -destalias NEW_SERVER
+
+
+# Import the trust CA chain
+$JAVA_HOME/bin/keytool -import -trustcacerts -alias "trust-ca" -file TRUST.crt -keystore MYKEYSTORE.jks -storepass "password"
+
+
+#cp MYKEYSTORE.jks /var/tmp 

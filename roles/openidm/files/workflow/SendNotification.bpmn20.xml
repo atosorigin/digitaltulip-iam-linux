@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/test">
+  <process id="sendNotificationProcess" name="Send Notification Process" isExecutable="true">
+    <scriptTask id="sendNotificatication" name="Send Notification Task" scriptFormat="groovy" activiti:autoStoreVariables="true">
+      <script>if (!binding.variables.containsKey("notificationRequesterId")) {
+	notificationRequesterId = ""
+}
+
+if (!binding.variables.containsKey("notificationRequesterDiasplayable")) {		
+	notificationRequesterDiasplayable = ""
+}
+
+if (!binding.variables.containsKey("notificationSubType")) {
+	notificationSubType = ""
+}
+
+java.text.SimpleDateFormat formatUTC = new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.S'Z'");     
+formatUTC.setTimeZone(TimeZone.getTimeZone("UTC"));     
+requestDate = formatUTC.format(new Date());
+
+def newNotification = [
+                        "receiverId": notificationReceiverId,
+			"requesterId" : notificationRequesterId,
+			"requester" : notificationRequesterDiasplayable,
+			"createDate" : requestDate,
+			"notificationType" : notificationType,
+			"notificationSubtype" : notificationSubType,
+			"message" : notificationMessage
+                ];
+openidm.create("repo/ui/notification/", newNotification)
+</script>
+    </scriptTask>
+    <startEvent id="startevent1" name="Start" activiti:formKey="org.forgerock.sendNotificationInit">
+      <extensionElements>
+        <activiti:formProperty id="notificationRequesterDiasplayable" name="Requester" type="string"></activiti:formProperty>
+        <activiti:formProperty id="notificationRequesterId" name="Requester User Id"></activiti:formProperty>
+        <activiti:formProperty id="notificationReceiverId" name="ID of user to send notification" type="string" required="true"></activiti:formProperty>
+        <activiti:formProperty id="notificationType" name="Notification Type" type="enum" required="true">
+          <activiti:value id="warning" name="Warning"></activiti:value>
+          <activiti:value id="error" name="Error"></activiti:value>
+          <activiti:value id="info" name="Info"></activiti:value>
+        </activiti:formProperty>
+        <activiti:formProperty id="notificationSubType" name="Notification Sub Type"></activiti:formProperty>
+        <activiti:formProperty id="notificationMessage" name="Notification Message" required="true"></activiti:formProperty>
+      </extensionElements>
+    </startEvent>
+    <endEvent id="endevent1" name="End"></endEvent>
+    <sequenceFlow id="flow1" sourceRef="startevent1" targetRef="sendNotificatication"></sequenceFlow>
+    <sequenceFlow id="flow2" sourceRef="sendNotificatication" targetRef="endevent1"></sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_sendNotificationProcess">
+    <bpmndi:BPMNPlane bpmnElement="sendNotificationProcess" id="BPMNPlane_sendNotificationProcess">
+      <bpmndi:BPMNShape bpmnElement="sendNotificatication" id="BPMNShape_sendNotificatication">
+        <omgdc:Bounds height="55.0" width="121.0" x="340.0" y="250.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="startevent1" id="BPMNShape_startevent1">
+        <omgdc:Bounds height="35.0" width="35.0" x="200.0" y="260.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endevent1" id="BPMNShape_endevent1">
+        <omgdc:Bounds height="35.0" width="35.0" x="570.0" y="260.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1">
+        <omgdi:waypoint x="235.0" y="277.0"></omgdi:waypoint>
+        <omgdi:waypoint x="340.0" y="277.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow2" id="BPMNEdge_flow2">
+        <omgdi:waypoint x="461.0" y="277.0"></omgdi:waypoint>
+        <omgdi:waypoint x="570.0" y="277.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

@@ -1,0 +1,2 @@
+webagents_home: "{{install_root}}/web_agents"
+agent_root: apache22_agent

@@ -1,0 +1,89 @@
+Enabling LDAP Pass Through Authentication 
+
+This document describes how to configure OpenIDM to use ldap for pass through authentication. Out of the box, 
+OpenIDM enables the  local "openidm-admin" account to make REST calls. This user in the "openidm-admin" role, and has extended
+privileges. 
+
+To use LDAP instead of a local account you must create an LDAP group that contains OpenIDM administrators. 
+Any member of this group will have admin rights. This sample uses the 
+group cn=openidm-admins,ou=Groups,dc=example,dc=com.
+
+
+There are three files that you will need (included as part of this bundle):
+
+provisioner.openicf-ldap.json 
+
+This is the ICF connector to your LDAP directory you will authenticate against. Edit this to match your environment. It is essential that 
+your "account" object has ldapGroups mapped. For example:
+
+ "ldapGroups" : {
+                    "type" : "array",
+                    "items" : {
+                        "type" : "string",
+                        "nativeType" : "string"
+                    },
+                    "nativeName" : "ldapGroups",
+                    "nativeType" : "string"
+}
+
+You can validate that the connector is returning groups by doing a GET on system/ldap url. For example:
+
+/geturl.sh http://openam.example.com/openidm/system/ldap/account/uid=idmadmin,ou=People,dc=example,dc=com
+{
+  "_id": "uid%3Didmadmin%2Cou%3DPeople%2Cdc%3Dexample%2Cdc%3Dcom",
+  "uid": [
+    "idmadmin"
+  ],
+  "ou": [],
+  "ldapGroups": [
+    "cn=openidm-admins,ou=Groups,dc=example,dc=com"
+  ],
+  ....
+}
+
+
+The "name" attribute of the provisioner will be used in the authentication.json file below.
+
+
+authentication.json 
+
+This configuration file defines how OpenIDM authenticates RESTful users.
+The relevant changes made to this file are:
+
+ "passThroughAuth" : "system/ldap/account",   <- Points to your ldap endpoint
+ 
+"propertyMapping" : {
+        "userId" : "_id",
+        "userCredential" : "password",
+        "userRoles" : "ldapGroups"      <- note mapping to ldapGroups
+        
+ "allowedGroups" : [
+        "cn=openidm-admins,ou=Groups,dc=example,dc=com"
+    ],
+    
+ Allowed groups are the list of ldap groups that define whether a user is an administrator or not. 
+ 
+ authnPopulateContext.js 
+ 
+ This script is executed to evaluate the security context of the user. 
+ 
+Updates made to this file include:
+ userDetail = openidm.query(resource, {
+            'query' : {
+                'Contains' : {
+                    'field' : 'uid',  <-- Note query looks up uid instead of cn
+                    'values' : [
+                        security.username
+                    ]
+                }
+            }
+  
+if (security.userid.component === "system/ldap/account") {
+            security["openidm-roles"] = isMemberOfAllowedGroups(userDetail.result[0].ldapGroups) ? ["openidm-admin","openidm-authorized"] : ["openidm-authorized"];
+        }
+        
+The userDetail object references "ldapGroups" instead of the default "memberOf"
+
+
+  
+

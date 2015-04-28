@@ -1,0 +1,6 @@
+#!/bin/bash
+# Create a J2EE agent specified by $1
+
+SSOADM=~/ssoadmin/openam/bin/ssoadm 
+
+$SSOADM create-agent --realm "/"  -agentname $1 --agenttype J2EEAgent --adminid amadmin --password-file ~/etc/amadmin_pw 

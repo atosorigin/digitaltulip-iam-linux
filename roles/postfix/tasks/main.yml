@@ -1,0 +1,18 @@
+---
+# Install postfix to handle mail for OpenIDM, etc.
+
+- name: Install required packages
+  yum: name={{item}} state=latest
+  with_items:
+   - postfix
+   - mailx
+  
+  
+- name: fix up main.cf 
+  lineinfile: dest=/etc/postfix/main.cf line="canonical_maps = regexp:/etc/postfix/canonical-redirect" state=present
+ 
+- name: copy redirect map
+  template: src=canonical-redirect dest=/etc/postfix/canonical-redirect
+   
+- name: restart postfix
+  service: name=postfix state=restarted

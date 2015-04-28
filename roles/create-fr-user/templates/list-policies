@@ -1,0 +1,6 @@
+#!/bin/bash
+# Imports policies for / realm
+
+SSOADM="{{install_root}}/ssoadmin/openam/bin/ssoadm"
+
+$SSOADM list-policies --realm "/"  --adminid amadmin --password-file ~/etc/amadmin_pw 

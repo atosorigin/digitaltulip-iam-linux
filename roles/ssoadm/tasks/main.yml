@@ -1,0 +1,77 @@
+---
+# This role installs openam ssoadm tools
+# This assumes tomcat and openam have already been installed and are running
+
+- name: unpack ssoadm tools
+  command: creates="{{ install_root }}/ssoadmin" unzip "{{ download_dir }}/openam/SSOAdminTools-{{ openam_version }}.zip" -d "{{ install_root }}/ssoadmin"
+
+- file: path="{{ install_root }}/ssoadmin" owner="{{ fr_user}}" mode=0777 recurse=yes
+- file: path="{{ install_root }}/openam" owner="{{ fr_user}}" mode=0777 recurse=yes
+
+
+  
+# Create ssoadm tools 
+- name: setup ssoadm tools
+  command: chdir={{ install_root }}/ssoadmin {{ install_root }}/ssoadmin/setup -p /home/fr/openam --acceptLicense
+  environment:
+    JAVA_HOME: "{{java_home}}"
+
+# ssoadm fails if a site URL is defined and the command cant accept the SSL cert. 
+# See https://wikis.forgerock.org/confluence/display/openam/Using+the+ssoadm+command+with+a+Site+configuration
+# This command fixes up ssoadm to map the site URL. Using sed on the guest turns out to be much easier than lineinfile
+#- template: src=ssoadm-patch dest="{{install_root}}/ssoadmin/openam/bin" mode=0755 owner={{fr_user}}
+#- command: chdir="{{install_root}}/ssoadmin/openam/bin" ./ssoadm-patch 
+
+# Make sure everything is owned by fr user  
+- name: set group permission
+  file: recurse=yes state=directory  owner="{{ fr_user }}"
+     group="tomcat" path="{{ install_root}}/ssoadmin" mode=0775
+- name: restart openam service
+  service: name=openam state=restarted enabled=yes
+
+- name: Wait for openam war to be fully deployed before running configurator
+  wait_for: port={{openam_server_port}} delay=10
+
+# Bit of hack. The previous command waits for the port -but AM could still be deploying
+# So this waits another 30 seconds to be safe
+- name: wait for open am 
+  wait_for: port={{openam_server_port}} delay=30
+
+- name: copy password file
+  template: src=pwd.txt dest="{{install_root}}/ssoadmin/openam/bin/pwd.txt" owner="{{fr_user}}" mode=400 
+- name: copy authentication.configuration
+  template: src=authenticationinstance.config dest="{{install_root}}/ssoadmin/openam/bin/authenticationinstance.config"
+- name: copy portal xml
+  template: src=portal.xml dest="{{install_root}}/ssoadmin/openam/bin/portal.xml"
+- name: copy portal extra xml
+  template: src=portal_extra.xml dest="{{install_root}}/ssoadmin/openam/bin/portal_extra.xml"
+
+- name: copy hosted xml
+  template: src=iamhosted.xml dest="{{install_root}}/ssoadmin/openam/bin/iamhosted.xml"
+- name: copy hosted extra xml
+  template: src=iamhosted_extra.xml dest="{{install_root}}/ssoadmin/openam/bin/iamhosted_extra.xml"
+
+
+
+- name: copy datastore.configuration
+  template: src="datastore.config" dest="{{install_root}}/ssoadmin/openam/bin/datastore.config"
+
+- template: src=ssoadm-patch dest="{{install_root}}/ssoadmin/openam/bin/" mode=0755 owner={{fr_user}}
+- command: chdir="{{install_root}}/ssoadmin/openam/bin" ./ssoadm-patch 
+
+- name: create realm
+  command: "{{ install_root }}/ssoadmin/openam/bin/ssoadm create-realm --realm {{realm}} -u amadmin -f {{ install_root }}/ssoadmin/openam/bin/pwd.txt"
+- name: create authentication module
+  command: "{{ install_root }}/ssoadmin/openam/bin/ssoadm  create-auth-instance -e {{realm}} -m AD -t AD -u amadmin -f {{ install_root }}/ssoadmin/openam/bin/pwd.txt"
+- name: update authentication module
+  command: "{{ install_root }}/ssoadmin/openam/bin/ssoadm  update-auth-instance -e {{realm}} -m AD -u amadmin -f {{ install_root }}/ssoadmin/openam/bin/pwd.txt -D {{ install_root }}/ssoadmin/openam/bin/authenticationinstance.config"
+- name: update auth chain
+  command: "{{ install_root }}/ssoadmin/openam/bin/ssoadm  update-auth-cfg-entr -e {{realm}} -m ldapService -u amadmin -f {{ install_root }}/ssoadmin/openam/bin/pwd.txt -a 'AD|REQUIRED' "
+- name: create datastore
+  command: "{{ install_root }}/ssoadmin/openam/bin/ssoadm create-datastore -e {{realm}} -m AD -t LDAPv3ForAD -u amadmin -f {{ install_root }}/ssoadmin/openam/bin/pwd.txt -D {{ install_root }}/ssoadmin/openam/bin/datastore.config"
+- name: create circle of trust
+  command: "{{ install_root }}/ssoadmin/openam/bin/ssoadm create-cot --cot {{circleoftrust}} -e {{realm}} -u amadmin -f {{ install_root }}/ssoadmin/openam/bin/pwd.txt"
+- name: import host identity
+  command: "{{ install_root }}/ssoadmin/openam/bin/ssoadm import-entity --cot {{circleoftrust}} -e {{realm}} -m {{ install_root }}/ssoadmin/openam/bin/iamhosted.xml -x {{ install_root }}/ssoadmin/openam/bin/iamhosted_extra.xml -u amadmin -f {{ install_root }}/ssoadmin/openam/bin/pwd.txt"
+- name: import portal identity
+  command: "{{ install_root }}/ssoadmin/openam/bin/ssoadm import-entity --cot {{circleoftrust}} -e {{realm}} -m {{ install_root }}/ssoadmin/openam/bin/portal.xml -x {{ install_root }}/ssoadmin/openam/bin/portal_extra.xml -u amadmin -f {{ install_root }}/ssoadmin/openam/bin/pwd.txt"

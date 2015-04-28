@@ -1,0 +1,14 @@
+# Agent Response File
+CONFIG_DIR="{{ tomcat_instance_dir }}/conf"
+CATALINA_HOME="{{tomcat_instance_dir }}"
+# doesnt work - due to bug. http://bugster.forgerock.org/jira/browse/OPENAM-3209
+# Note: installing in global.xml is not recommended. See http://bugster.forgerock.org/jira/browse/OPENAM-3088
+#INSTALL_GLOBAL_WEB_XML= true
+AM_SERVER_URL="http://{{ openam_fqdn }}:{{openam_server_port}}/openam"
+AGENT_URL="http://{{ openam_fqdn }}:{{tomcat_port}}/agentapp"
+AGENT_ENCRYPT_KEY="z7dZ+dcylZVJBtACNr7irL3PSoLbU/+r"
+AGENT_PROFILE_NAME="{{ tomcat_instance }}"
+AGENT_PASSWORD_FILE="{{agent_instance_dir}}/agentpw"
+CREATE_AGENT_PROFILE_NAME= true
+AGENT_ADMINISTRATOR_NAME= amadmin
+AGENT_ADMINISTRATOR_PASSWORD_FILE= {{home_dir}}/etc/amadmin_pw

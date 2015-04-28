@@ -1,0 +1,106 @@
+
+# Set this to build ForgeRock released binaries vs. Nightly builds. 
+# If you use released binaries you will need to provide the downloaded zip files in
+#  the frstack/staging/ directory, and 
+# Edit vars/released.yml with the version info
+#release: nightly
+release: staged
+#release: released
+#release: "maven-released"
+
+# Use a caching proxy server if possible to speed up re-installs
+# Comment these lines out if you do not have a proxy. Note that 
+# You need at least one dummy key in the map or ansible will complain so leave foo: bar in the map
+proxy_env:
+#  http_proxy: http://192.168.56.1:2001
+#  https_proxy: http://192.168.56.1:2001
+  foo: bar
+  
+
+
+# location of downloaded software zip files relative to the guest image
+# We try to keep this consistent across environments
+download_dir: "/var/tmp/staging"
+ 
+  
+# ForgeRock User. This account will run all non root s/w (openam, openidm, etc.)
+fr_user: fr
+## home dir for fr user
+home_dir: "/home/{{fr_user}}"
+
+# Top level where all s/w is installed
+install_root: /opt/ois
+
+# Java home on the guest. We use openjdk by default. This is the default location. 
+java_home: /usr/lib/jvm/java-7-openjdk-amd64
+#java_home: /etc/alternatives/java
+
+# Config defaults
+
+# This is the short hostname that should be returned by the "hostname" command
+# This will get put in /etc/hosts by vagrant.
+# TODO: Find a better start script that puts the hostname in /etc/hosts on boot. Vagrant does this for us
+openam_hostname: "iam"
+
+### OpenAM ####
+openam_cookie_domain: ".{{env}}.digitaltulip.net"
+openam_fqdn: iam.{{env}}.digitaltulip.net
+portal_fqdn: portal.{{env}}.digitaltulip.net
+
+# Site URL. This is the load balancer URL (haproxy) - not the URL of the openam instance
+openam_site_url: "https://iam.{{env}}.digitaltulip.net/openam"
+# Port where internal am instance is running
+openam_server_port: 8080 
+
+
+## todo: Put passwords in Ansible vault
+amadmin_password: D1g1talTul1p
+amldapuser_password: D1g1talTul1p
+amagentuser_password: Tul1pD1g1tal
+
+# OpenAM config location within embedded OpenDJ 
+openam_config_root: "dc={{env}},dc=digitaltulip,dc=net"
+base_user_dn : "cn=Users,{{openam_config_root}}"
+#### OpenDJ #######
+
+# OpenDJ base DN for user data store
+opendj_basedn: "dc={{env}},dc=digitaltulip,dc=net"
+# Datastore password. TODO: use ansible vault file
+opendj_password: D1g1talTul1p
+
+opendj_fqdn: "opendj.{{env}}.digitaltulip.net"
+opendj_dirmgr: "cn=Directory Manager" 
+
+# These ovveride opendj role settings
+opendj_ldap_port: 389
+opendj_ldaps_port: 636
+opendj_admin_port: 4444
+opendj_jmx_port: 1689
+
+
+openam_ldap_port: 1389
+openam_ldaps_port: 1636
+openam_admin_port: 14444
+openam_jmx_port: 11689
+
+
+ad_host: "ad.{{env}}.digitaltulip.net"
+ad_port: 389
+# Tomcat 
+
+# Tomcat instance location
+# Note: This is the default Fedora location
+#tomcat_parent: "/var/lib/tomcats"
+
+tomcat_parent: "{{ install_root }}"
+
+windows_ssh_user: Administrator
+windows_ssh_pass: D1g1talTul1p
+
+owner_group: tomcat
+
+realm: ActiveDirectory
+circleoftrust: DigitalTulip
+
+
+ldap_bind_user : "CN=Administrator,CN=Users,{{opendj_basedn}}"

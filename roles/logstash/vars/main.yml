@@ -1,0 +1,10 @@
+
+
+dj_access_log: /opt/ois/opendj/logs/access
+idm_audit_dir: /opt/ois/openidm/audit
+idm_access_log: "{{idm_audit_dir}}/access.csv"
+idm_recon_log: "{{idm_audit_dir}}/recon.csv"
+idm_activity_log: "{{idm_audit_dir}}/activity.csv"
+
+openam_log_dir: /opt/ois/openam/openam/log
+

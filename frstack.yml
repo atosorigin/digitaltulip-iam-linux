@@ -1,0 +1,49 @@
+---
+
+# Install the ForgeRock stack 
+# This is a work in progress
+# 
+# To run only a specific tag use the shellscript: bin/frstack tagname
+#
+# Before this is run it is assumed some basic pre-reqs have been completed:
+#
+# - The forgerock user has been created (default to fr). The software is installed using this account
+#  The "fr" user must be created with sudo priv. The vagrant.yml does this for you
+# - Appropriate Firewall ports must be open on the guest. We use haproxy to put most things through 80/443
+# Right now this is very much dependent on Fedora/Centos packages, etc.  There is a start at making it 
+# Work on other platforms - but it needs work
+
+
+# These plays are common to all hosts in the stack. This installs basic packages, java, etc.
+# Put roles here that need to be run on every host in stack
+
+- hosts: tag_class_{{env}}-iamserver
+  remote_user: ubuntu
+  sudo: yes
+  roles:
+   - create-fr-user
+   - { role: install-base-apt, when: ansible_os_family == 'Debian', tags: ["common"]}
+# Play for ha-proxy server. 
+- hosts: tag_class_{{env}}-haproxyserver
+  remote_user: ubuntu
+  sudo: yes
+  roles:
+    - { role: haproxy, tags: ["http","haproxy"]}
+
+# These are more specific to each host
+# oisa /oisb - servers a and b - for failover
+# ois - both servers
+- hosts: tag_class_{{env}}-iamserver
+  remote_user: ubuntu
+  sudo: yes
+  vars_files: 
+    - "vars/{{release}}.yml"
+  roles:
+   - { role: tomcat, tomcat_instance: 'openam', tomcat_base_port: 8000, tags: ["tomcat", "openam"]}
+   - { role: tomcat, tomcat_instance: 'openig', tomcat_base_port: 2000, tags: ["tomcat", "openig"]}
+   - { role: tomcat, tomcat_instance: 'apps', tomcat_base_port: 3000, tags: ["tomcat", "apps"]}
+  # - { role: opendj, tags: ["opendj"]}
+   - { role: openidm, tags: ["openidm"]}
+   - { role: openam,  tomcat_openam_dir: "{{tomcat_parent}}/openam", tags: ["openam"]}
+   - { role: ssoadm, tags: ["ssoadm"]}
+   - { role: openig,  tags: ["openig"]}

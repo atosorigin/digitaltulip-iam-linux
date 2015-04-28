@@ -1,0 +1,18 @@
+#Default variables
+# These can be overridden in the parent playbook
+
+tomcat_parent: /opt/ois
+#tomcat_instance: tomcat
+tomcat_instance_dir: "{{tomcat_parent}}/{{tomcat_instance}}"
+download_dir: /var/tmp/staging
+tomcat_base_port: 8000
+tomcat_admin_port: "{{ tomcat_base_port + 5}}"
+tomcat_http_port: "{{ tomcat_base_port + 80}}"
+tomcat_https_port: "{{ tomcat_base_port + 443}}"
+tomcat_ajp_port: "{{ tomcat_base_port + 9}}"
+tomcat_user: fr
+admin_username: admin
+admin_password: D1g1talTul1p
+tomcat_version: "8.0.20"
+tomcat_archive: "apache-tomcat-{{ tomcat_version }}.tar.gz"
+tomcat_download_url: "http://www.mirrorservice.org/sites/ftp.apache.org/tomcat/tomcat-8/v{{ tomcat_version }}/bin/{{ tomcat_archive }}"

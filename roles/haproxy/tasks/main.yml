@@ -1,0 +1,45 @@
+---
+# This role installs haproxy 
+
+# Fedora now has a recent 1.5 haproxy
+#- name: Get haproxy. Use custom version that supports ssl
+#  get_url: url={{haproxy_download_url }} dest={{ download_dir }}/{{ haproxy_rpm }}
+#  
+## todo: change to repo when http proxy gets ssl 
+#- name: Install downloaded haproxy. yum repos do not have the latest builds that support SSL so we get a custom one
+#  yum: name={{ download_dir }}/{{ haproxy_rpm }} state=present
+
+- name: Install haproxy
+  apt_repository : repo="ppa:vbernat/haproxy-1.5" state=present
+
+- name: Install proxy
+  apt: name=haproxy state=latest
+
+- name: copy haproxy.cfg
+  template: src=haproxy.cfg dest=/etc/haproxy/haproxy.cfg owner=root
+
+- name : cert folder
+  file : path=/etc/pki/tls/certs state=directory
+
+- name : private cert folder
+  file : path=/etc/pki/tls/private state=directory
+
+- name: create self-signed SSL cert for haproxy
+  command: creates=/etc/pki/tls/certs/haproxy.crt openssl req -new -nodes -x509 -subj "/C=CA/ST=AB/L=Calgary/O=ForgeRock/CN=iam.{{env}}.digitaltulip.net" -days 3650 
+    -keyout /etc/pki/tls/private/haproxy.key -out /etc/pki/tls/certs/haproxy.crt 
+    -extensions v3_ca  
+
+- name: Create haproxy.pem
+  shell: chdir=/etc/pki/tls creates=/etc/pki/tls/haproxy.pem /bin/cat certs/haproxy.crt private/haproxy.key > /etc/pki/tls/haproxy.pem 
+  # we ignore errors because this is not idempotent
+- name: Delete any old certificate 
+  command:  keytool -delete -noprompt -alias iam.{{env}}.digitaltulip.net -storepass changeit -keystore /etc/pki/java/cacerts
+  ignore_errors: yes
+
+# we ignore errors because this is not idempotent
+- name: Import the cert into java keystore for openam use. Ignore errors if this is run a second time
+  command:  keytool -importcert -noprompt -alias iam.{{env}}.digitaltulip.net -storepass changeit -file /etc/pki/tls/certs/haproxy.crt -trustcacerts -keystore /etc/pki/java/cacerts
+  ignore_errors: yes
+
+- name: Start haproxy
+  service: name=haproxy state=restarted enabled=yes

@@ -1,0 +1,31 @@
+---
+# Installs the Apache OpenAM agent
+# Needs to be run as root - as the Apache httpd conf dir is owned by non fr user
+
+# download agent 
+- include: ../../download.yml download_file="{{apache_agent_zip}}" download_url="{{apache_agent_download_url}}"
+  
+- name: Unpack archive
+  unarchive: src={{ download_dir }}/{{ apache_agent_zip }} dest={{install_root}} copy=no
+
+- name: create password file
+  copy: src=agentpw dest="{{ webagents_home }}/agentpw"
+  
+#- name: Copy license agreement so we don't get prompted
+#  copy: src=license.log dest={{ webagents_home }}/apache22_agent/data
+  
+- name: Stop apache
+  service: name=httpd state=stopped
+  
+- name: Copy agent response template 
+  template: src=agentresponse-custom.txt dest="{{ webagents_home }}/agentresponse-custom.txt" 
+
+- name: Run agentadmin 
+  shell: "{{ webagents_home }}/apache24_agent/bin/agentadmin --acceptLicense --custom-install --useResponse {{ webagents_home }}/agentresponse-custom.txt"
+
+- name: Change ownership of agent files 
+  file: path="{{ webagents_home }}" owner=fr group=apache recurse=yes state=directory
+  
+- name: start apache
+  service: name=httpd state=started
+  

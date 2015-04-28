@@ -1,0 +1,5 @@
+# Default ports. We change these so we dont collide with OpenAM, etc.
+openidm_port: 9080
+openidm_ssl_port: 9443
+install_root: /opt/ois
+download_dir: /var/tmp/staging

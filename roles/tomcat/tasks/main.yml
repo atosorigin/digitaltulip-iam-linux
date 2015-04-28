@@ -1,0 +1,55 @@
+--- 
+# Create tomcat instance. Variables to pass in to this role (these can also be global defaults)
+# tomcat_parent - Parent directory for installation (example: /home/fr)
+# tomcat_instance - Intance name (e.g. tomcat-openam). 
+# tomcat_user - user id to run as 
+# tomcat_http_port
+# tomcat_https_port
+
+# Download tomcat 
+#- name: download tomcat 
+
+- include: ../../download.yml download_file={{tomcat_archive}} download_url={{tomcat_download_url}}
+
+- file: path={{tomcat_parent}} state=directory owner={{ fr_user}} group={{owner_group}}
+
+- name: Extract tomcat archive
+  command: tar -xvf {{download_dir }}/{{tomcat_archive}} -C {{ tomcat_parent }}
+
+- name: Disable {{ tomcat_instance }} service
+  service: name={{ tomcat_instance }} state=stopped enabled=no
+  register: command_result
+  failed_when: "command_result|failed and 'no service' not in command_result.msg"
+
+- name: remove any old tomcat instance 
+  file: path={{tomcat_instance_dir}} state=absent
+
+- name: mv tomcat instance into place
+  command: mv -f {{tomcat_parent}}/apache-tomcat-{{ tomcat_version }} {{ tomcat_instance_dir}}
+
+- name: change folder permissions
+  file : path={{ tomcat_instance_dir}} group="{{owner_group}}" owner="{{ fr_user}}" recurse=yes state=directory
+
+- name: check instance path is present  
+  file: path={{tomcat_instance_dir}} state=directory
+
+- name: Configure Tomcat server
+  template: src=server.xml dest={{ tomcat_parent }}/{{ tomcat_instance }}/conf/ group={{owner_group}} owner={{ fr_user}}
+
+- name: Configure Tomcat users
+  template: src=tomcat-users.xml dest={{ tomcat_instance_dir }}/conf/ group="{{owner_group}}" owner="{{ fr_user}}"
+
+#- name: cp setenv.sh to set jvm params
+#  copy: src=setenv.sh dest="{{ tomcat_instance_dir }}/bin"
+
+- name: Install Tomcat init script
+  template: src=tomcat.service  dest=/etc/init/{{tomcat_instance}}.conf mode=u+rw
+
+- name: reload services
+  command: sudo initctl reload-configuration
+
+- name: Start Tomcat
+  service: name={{ tomcat_instance }} state=restarted enabled=yes
+
+- name: wait for tomcat to start
+  wait_for: port={{ tomcat_http_port }} delay=10

@@ -1,0 +1,5 @@
+# HA Proxy
+# The rpm repos dont have the latest version needed to support SSL - so use a custom version
+haproxy_rpm: "haproxy-1.5-dev19.el6.x86_64.rpm"
+haproxy_download_url: "http://silverdire.com/files/repo/el6/x86_64/{{ haproxy_rpm }}"
+

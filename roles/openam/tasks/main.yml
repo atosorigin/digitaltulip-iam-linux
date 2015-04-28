@@ -1,0 +1,85 @@
+---
+# This role installs openam in tomcat
+# This assumes tomcat has already been installed
+# Assumes the software has been downloaded and is available at {{ forgerock_download_dir }}/openam
+# Uses the variable {{ tomcat_openam_dir }} to know where to install the war file. 
+#  This should be the path to the openam tomcat instance dir
+
+- include: ../../openam-uninstall.yml
+
+# download openam or used cached copy
+- include: ../../download.yml download_file={{openam_zip_file}} download_url={{openam_download_url}}
+
+- lineinfile: dest="/etc/hosts" line="127.0.0.1 server1.{{openam_fqdn}}"
+
+
+
+
+
+- name: unpack openam
+  unarchive: src={{ download_dir }}/{{ openam_zip_file }} dest={{ download_dir }} copy=no
+
+- name: unpackconfigurator 
+  unarchive: src={{ download_dir }}/openam/{{ openam_configuration_zip }} dest={{ download_dir }}/openam copy=no
+
+# Modify unpacked war
+
+- name : Ensure file structure for local Update
+  file : path={{item}} state=directory
+  with_items:
+    - "{{ download_dir }}/openam/XUI"
+    - "{{ download_dir }}/openam/XUI/images"
+    - "{{ download_dir }}/openam/XUI/templates/"
+    - "{{ download_dir }}/openam/XUI/templates/common"
+
+
+- name : Copy over theme config
+  copy: src=themeConfig.json dest={{ download_dir }}/openam/XUI/themeConfig.json
+
+- name : Copy over images for skinning
+  copy: src=digitaltulip.png dest={{ download_dir }}/openam/XUI/images/digitaltulip.png
+
+- name : Copy over images for skinning
+  copy: src=AtosHome.png dest={{ download_dir }}/openam/XUI/images/AtosHome.png
+
+- name : Copy over LoginBaseTemplate for skinning
+  copy: src=LoginBaseTemplate.html dest={{ download_dir }}/openam/XUI/templates/common/LoginBaseTemplate.html
+
+
+- name : Update war 
+  command: "{{item}}"
+  with_items:
+     - jar -uf {{ download_dir }}/openam/OpenAM-12.0.0.war -C {{ download_dir }}/openam/ XUI/themeConfig.json
+     - jar -uf {{ download_dir }}/openam/OpenAM-12.0.0.war -C {{ download_dir }}/openam/ XUI/images/digitaltulip.png
+     - jar -uf {{ download_dir }}/openam/OpenAM-12.0.0.war -C {{ download_dir }}/openam/ XUI/images/AtosHome.png
+     - jar -uf {{ download_dir }}/openam/OpenAM-12.0.0.war -C {{ download_dir }}/openam/ XUI/templates/common/LoginBaseTemplate.html
+
+# create install dir, openam dir
+- name: Change owner of install folder to {{ fr_user }}
+  file: path={{ tomcat_openam_dir }}/webapps owner={{ fr_user }} group={{owner_group}} state=directory recurse=yes
+
+- name: Deploy war to tomcat
+  command: cp {{ download_dir }}/openam/OpenAM-{{ openam_version }}.war {{ tomcat_openam_dir}}/webapps/openam.war
+
+- name: copy config file over
+  template: src=openam.config dest={{ download_dir }}/openam/openam.properties
+
+
+# Make sure everything is owned by fr user  
+- name: Check folder permissions
+  file: path={{ tomcat_openam_dir }} recurse=yes state=directory  owner={{fr_user}} group={{owner_group}}
+
+
+- name: Ensure openam tomcat instance is running
+  service: name=openam state=restarted enabled=yes
+
+- name: Wait for openam war to be fully deployed before running configurator
+  wait_for: port={{openam_server_port}} delay=10
+
+# Bit of hack. The previous command waits for the port -but AM could still be deploying
+# So this waits another 30 seconds to be safe
+- name: wait for open am 
+  wait_for: port={{openam_server_port}} delay=30
+
+- name: run silent configurator
+  command: java -jar {{ download_dir }}/openam/openam-configurator-tool-{{ openam_version }}.jar  -f {{ download_dir }}/openam/openam.properties --acceptLicense

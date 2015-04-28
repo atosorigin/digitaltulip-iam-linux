@@ -1,0 +1,26 @@
+# {{ ansible_managed }}
+#  There are a lot of open ports here. OK for dev - but for production you will want to lock this down
+*filter
+:INPUT ACCEPT [0:0]
+:FORWARD ACCEPT [0:0]
+:OUTPUT ACCEPT [4:512]
+-A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+-A INPUT -p icmp -j ACCEPT
+-A INPUT -i lo -j ACCEPT
+-A INPUT -p tcp -m state --state NEW -m tcp --dport 22 -j ACCEPT
+-A INPUT -p tcp -m state --state NEW -m tcp --dport 80 -j ACCEPT
+-A INPUT -p tcp -m state --state NEW -m tcp --dport 443 -j ACCEPT
+-A INPUT -p tcp -m state --state NEW -m tcp --dport 1389 -j ACCEPT
+-A INPUT -p tcp -m state --state NEW -m tcp --dport 389 -j ACCEPT
+-A INPUT -p tcp -m state --state NEW -m tcp --dport 636 -j ACCEPT
+-A INPUT -p tcp -m state --state NEW -m tcp --dport 1080 -j ACCEPT
+-A INPUT -p tcp -m state --state NEW -m tcp --dport 3306 -j ACCEPT
+-A INPUT -p tcp -m state --state NEW -m tcp --dport 8080 -j ACCEPT
+-A INPUT -p tcp -m state --state NEW -m tcp --dport 9080 -j ACCEPT
+-A INPUT -p tcp -m state --state NEW -m tcp --dport 28080 -j ACCEPT
+-A INPUT -p tcp -m state --state NEW -m tcp --dport 38080 -j ACCEPT
+-A INPUT -p tcp -m state --state NEW -m tcp --dport 48080 -j ACCEPT
+-A INPUT -p tcp -m state --state NEW -m tcp --dport 4444 -j ACCEPT
+-A INPUT -j REJECT --reject-with icmp-host-prohibited
+-A FORWARD -j REJECT --reject-with icmp-host-prohibited
+COMMIT

@@ -1,0 +1,15 @@
+---
+# This role installs common base sw pre-reqs for the ForgeRock stack  using apt
+
+- apt_repository: repo='deb http://cdn.debian.net/debian wheezy-backports main' state=present
+
+- apt: update_cache=yes cache_valid_time=3600
+
+# - apt_key: url='http://haproxy.debian.net/bernat.debian.org.gpg'
+
+- name: Install base software
+  apt: name={{item}} state=present
+  environment: proxy_env
+  with_items:
+    - zip
+    - openjdk-7-jdk

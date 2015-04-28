@@ -1,0 +1,36 @@
+---
+# Installs the Apache tomcat agent
+
+# Download the agent or use the staged copy
+- include: ../../download.yml download_file="{{tomcat_agent_zip}}" download_url="{{tomcat_agent_download_url}}"
+
+  
+- name: Install OpenAM tomcat Agent dir. This is the master template dir
+  command: tar -xvf {{download_dir }}/{{tomcat_agent_zip}} -C {{ install_root }}
+  
+- name: Copy agent response file 
+  template: src=agentresponse.txt dest={{agent_instance_dir}}/{{tomcat_instance}}-response.txt
+ 
+#- name: Create agent instance dir
+#  command: creates={{agent_instance_dir}} /bin/cp -r {{agent_home}} {{agent_instance_dir}}
+  
+- name: create password file
+  copy: src=agentpw dest={{agent_instance_dir}}
+  
+#- name: Copy license agreement so we don't get prompted
+#  copy: src=license.log dest={{agent_instance_dir}}/data
+
+# Not needed as we run as the fr user 
+- name: Change ownership of agent files 
+  file: path="{{j2ee_agents_home}}" owner="{{fr_user}}"  recurse=yes state=directory
+
+- name: Stop tomcat 
+  service: name="{{ tomcat_instance }}" state=stopped
+  
+
+- name: Run agentadmin 
+  command: "{{agent_instance_dir}}/bin/agentadmin --acceptLicense --custom-install --useResponse {{agent_instance_dir}}/{{tomcat_instance}}-response.txt"
+  
+- name: Start tomcat
+  service: name={{ tomcat_instance }} state=started
+  

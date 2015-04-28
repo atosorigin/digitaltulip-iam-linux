@@ -1,0 +1,77 @@
+# Defines where to find the various ForgeRock nightly builds. 
+#  This will attempt to use the date to get the most recent build. This is not always going
+# to work if the build is broken - so you may have to edit this manually.
+
+
+
+jenkins: "https://builds.forgerock.org/view"
+fr_downloads: "http://download.forgerock.org/downloads"
+datestamp: "{{ansible_date_time.year}}{{ansible_date_time.month}}{{ansible_date_time.day }}"
+
+# DJ
+# Where we can grab nightly builds
+# http://download.forgerock.org/downloads/opendj/20150109020001/OpenDJ-2.7.0-20150109.zip 
+
+# Hack - because server does not always have the current build
+#opendj_date: "{{datestamp}}"
+opendj_datestamp: "20150109"
+opendj_jenkins_url: "{{jenkins}}/OpenDJ/job/OpenDJ%20-%20trunk%20-%20nightly/lastSuccessfulBuild/artifact/build/package"
+opendj_major: "OpenDJ-2.7.0" 
+opendj_zip: "{{opendj_major}}-{{opendj_datestamp}}.zip"
+opendj_download_url: "{{opendj_jenkins_url}}/{{opendj_zip}}"
+#opendj_download_url: "{{fr_downloads}}/opendj/{{opendj_datestamp}}020001/{{opendj_zip}}"
+
+
+# OpenAM builds
+openam_last_build: "OpenAM/job/OpenAM-Trunk-Nightly/lastBuild/org.forgerock.openam$openam-distribution-kit/artifact/org.forgerock.openam/openam-distribution-kit/12.0.0-SNAPSHOT"
+openam_jenkins: "{{jenkins}}/{{openam_last_build}}"
+openam_version: "13.0.0-SNAPSHOT"
+#openam_zip_file: "openam-distribution-kit-{{openam_version}}.zip"
+#openam_download_url: "{{openam_jenkins}}/{{openam_zip_file}}"
+#openam_license_switch: "--acceptLicense"
+
+# http://download.forgerock.org/downloads/openam/OpenAM-13.0.0-SNAPSHOT_nightly_20150111.zip
+openam_zip_file: "OpenAM-{{openam_version}}_nightly_{{datestamp}}.zip"
+openam_download_url: "{{ fr_downloads}}/openam/{{ openam_zip_file }}"
+
+
+# OpenIG
+
+
+# http://download.forgerock.org/downloads/openig/nightly/OpenIG-3.1.0-SNAPSHOT.war
+openig_jenkins: "{{jenkins}}/OpenIG/job/OpenIG%20-%203.0%20-%20nightly/lastSuccessfulBuild/artifact/openig-war/target"
+openig_version: "4.0.0-SNAPSHOT"
+openig_zip: "OpenIG-{{openig_version}}.war"
+#openig_download_url: "{{openig_jenkins}}/{{openig_zip}}"
+openig_download_url:  "{{ fr_downloads}}/openig/nightly/{{openig_zip}}"
+
+# openidm 
+openidm_version: "3.2.0-SNAPSHOT"
+openidm_zip: "openidm-{{openidm_version}}.zip"
+openidm_download_url: "{{jenkins}}/OpenIDM/job/OpenIDM/lastSuccessfulBuild/artifact/openidm-zip/target/{{openidm_zip}}"
+
+
+# Agents 
+jee_agents_jenkins: "{{jenkins}}/Nightly%20agents/job/OpenAM%20Maven%20JEE%20Agents/lastSuccessfulBuild"
+
+
+# Tomcat - currently agent 4.0.0
+tomcat_agent_version: "jee-agents-distribution-tomcat-v6-4.0.0-SNAPSHOT"
+tomcat_jenkins: "{{jee_agents_jenkins}}/org.forgerock.openam.agents$jee-agents-distribution-tomcat-v6/artifact/org.forgerock.openam.agents/jee-agents-distribution-tomcat-v6/4.0.0-SNAPSHOT"
+tomcat_agent_zip: "{{tomcat_agent_version}}.zip"
+tomcat_agent_download_url: "{{tomcat_jenkins}}/{{tomcat_agent_zip}}"
+
+# Apache
+apache_agent_version: apache_v24_Linux_64_agent_4.0.0-SNAPSHOT
+apache_agent_zip: "{{apache_agent_version}}.zip"
+apache_agent_download_url: "http://download.forgerock.org/downloads/openam/webagents/nightly/Linux/{{apache_agent_zip}}"
+
+
+
+# HA Proxy
+# DEPRECATED - Use the package version. Centos7 and Fedora now have 1.5 with SSL
+#
+# The rpm repos dont have the latest version needed to support SSL - so use a custom version
+# Not needed anymore - as Fedora and Centos 7 has 1.5 with SSL. Keep this for posterity
+#haproxy_rpm: "haproxy-1.5-dev19.el6.x86_64.rpm"
+#haproxy_download_url: "http://silverdire.com/files/repo/el6/x86_64/{{ haproxy_rpm }}"

@@ -1,0 +1,11 @@
+---
+# task to add swap space
+# Cloud images sometimes do not include swap - which can cause
+# the install to fail
+- name: Create 3GB swap file
+  command: "dd if=/dev/zero of=/swapfile bs=1M count=3000"
+  
+- command: mkswap /swapfile 
+- command: chmod 0600 /swapfile
+- command: swapon /swapfile
+- lineinfile:  dest=/etc/fstab line="/swapfile swap swap defaults 0 0" regexp="swapfile"

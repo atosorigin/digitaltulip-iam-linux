@@ -1,0 +1,42 @@
+---
+# This role logstash and the configuration files
+
+- name: Add ES rpm key
+  rpm_key: state=present key=http://packages.elasticsearch.org/GPG-KEY-elasticsearch
+  
+- name: Add ES Yum repo
+  copy: src=es.repo dest=/etc/yum.repos.d owner=root
+  
+- name: Download and install logstash 
+  yum: name={{item}} state=latest
+  environment:
+    proxy_env
+  with_items:
+    - logstash 
+    - elasticsearch
+  
+- copy: src=conf/ dest=/etc/logstash/conf.d
+- file: path=/etc/logstash/conf.disabled state=directory
+- copy: src=conf.disabled dest=/etc/logstash/conf.disabled
+  
+  
+- name: copy logstash conf files to stanard location on CentoS
+  template: src=conf/{{item}} dest=/etc/logstash/conf.d
+  with_items:
+    - 01_input_dj_access.conf
+    - 01_input_idm_access.conf
+    - 01_input_idm_activity.conf
+    - 01_input_idm_recon.conf
+    - 01_input_openam_policy.conf
+    - 01_input_openam_authentication.conf
+
+- name: Enable elasticsearch service
+  service: name=elasticsearch state=restarted enabled=yes    
+  
+- name: Enable logstash service
+  service: name=logstash state=restarted enabled=yes    
+  
+
+- name: Copying Kibana files to Apache
+  command: cp -r /opt/logstash/vendor/kibana /var/www/html/kibana
+  

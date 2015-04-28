@@ -1,0 +1,4 @@
+#!/bin/bash
+# Genereate a DES key. Needed for integrating openig with openam for password replay
+cd ~/tomcat-openam/webapps/openam/WEB-INF/lib
+java -cp ./openam-shared-12.0.0-SNAPSHOT.jar:./openam-core-12.0.0-SNAPSHOT.jar:./forgerock-util-1.1.0.jar com.sun.identity.common.DESGenKey

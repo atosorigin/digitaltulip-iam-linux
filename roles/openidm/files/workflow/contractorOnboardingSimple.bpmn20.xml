@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="Examples">
+  <process id="simpleContractorOnboarding" name="Simple Contractor onboarding process" isExecutable="true">
+    <startEvent id="start" activiti:initiator="startUserId">
+      <extensionElements>
+        <activiti:formProperty id="userName" name="Foobar" type="string" required="true"></activiti:formProperty>
+        <activiti:formProperty id="givenName" name="Given Name" type="string" required="true"></activiti:formProperty>
+        <activiti:formProperty id="familyName" name="Family Name" type="string" required="true"></activiti:formProperty>
+        <activiti:formProperty id="department" name="Department" type="string"></activiti:formProperty>
+        <activiti:formProperty id="jobTitle" name="Job Title" type="string"></activiti:formProperty>
+        <activiti:formProperty id="phoneNumber" name="Phone Number" type="string" required="true"></activiti:formProperty>
+        <activiti:formProperty id="email" name="Email" type="string" required="true"></activiti:formProperty>
+        <activiti:formProperty id="startDate" name="Start Date" type="string" required="true"></activiti:formProperty>
+        <activiti:formProperty id="endDate" name="End Date" type="string"></activiti:formProperty>
+        <activiti:formProperty id="password" name="Password" type="string" required="true"></activiti:formProperty>
+        <activiti:formProperty id="description" name="Description" type="string" required="true"></activiti:formProperty>
+        <activiti:formProperty id="provisionToXML" name="Create in XMLFile" type="boolean"></activiti:formProperty>
+        <activiti:formProperty id="cell" name="Cell Phone" type="string" required="true"></activiti:formProperty>
+      </extensionElements>
+    </startEvent>
+    <sequenceFlow id="sequenceFlow-66186015-2bd4-48d5-b695-648331202020" sourceRef="start" targetRef="createManagedUser"></sequenceFlow>
+    <scriptTask id="createManagedUser" scriptFormat="groovy" activiti:autoStoreVariables="true">
+      <script>
+                user = [userName:userName, givenName:givenName, familyName:familyName,
+                manager:startUserId, department:department, jobTitle:jobTitle, phoneNumber:phoneNumber, 
+                email:email, startDate:startDate, endDate:endDate, password:password, description:description]
+                params = [_queryId:'query-all-ids']
+                out:println "User coming from UI " + user
+                openidm.create('managed/user', user)
+            </script>
+    </scriptTask>
+    <sequenceFlow id="sequenceFlow-464a5e3b-93fb-4844-a923-79b063071022" sourceRef="createManagedUser" targetRef="serviceTask"></sequenceFlow>
+    <serviceTask id="serviceTask" activiti:expression="${openidm.query('managed/user', params)}" activiti:resultVariableName="idmresult"></serviceTask>
+    <sequenceFlow id="sequenceFlow-34c0c89a-20de-47d0-b247-38f2b2d5ba77" sourceRef="serviceTask" targetRef="scripttask2"></sequenceFlow>
+    <scriptTask id="scripttask2" scriptFormat="groovy" activiti:autoStoreVariables="true">
+      <script>
+                out:println "Managed users in OpenIDM: " + idmresult
+            </script>
+    </scriptTask>
+    <sequenceFlow id="sequenceFlow-5511e82c-d6c9-46a1-baa7-d6734fa2ac1b" sourceRef="scripttask2" targetRef="end"></sequenceFlow>
+    <endEvent id="end"></endEvent>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_contractorOnboarding">
+    <bpmndi:BPMNPlane bpmnElement="contractorOnboarding" id="BPMNPlane_contractorOnboarding">
+      <bpmndi:BPMNShape bpmnElement="scripttask2" id="BPMNShape_scripttask2">
+        <omgdc:Bounds height="60.0" width="100.0" x="380.0" y="0.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="start" id="BPMNShape_start">
+        <omgdc:Bounds height="35.0" width="35.0" x="0.0" y="15.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="createManagedUser" id="BPMNShape_createManagedUser">
+        <omgdc:Bounds height="60.0" width="100.0" x="80.0" y="0.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="end" id="BPMNShape_end">
+        <omgdc:Bounds height="35.0" width="35.0" x="530.0" y="15.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="serviceTask" id="BPMNShape_serviceTask">
+        <omgdc:Bounds height="60.0" width="100.0" x="230.0" y="0.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="sequenceFlow-464a5e3b-93fb-4844-a923-79b063071022" id="BPMNEdge_sequenceFlow-464a5e3b-93fb-4844-a923-79b063071022">
+        <omgdi:waypoint x="180.0" y="30.0"></omgdi:waypoint>
+        <omgdi:waypoint x="192.0" y="30.0"></omgdi:waypoint>
+        <omgdi:waypoint x="192.0" y="30.0"></omgdi:waypoint>
+        <omgdi:waypoint x="230.0" y="30.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sequenceFlow-5511e82c-d6c9-46a1-baa7-d6734fa2ac1b" id="BPMNEdge_sequenceFlow-5511e82c-d6c9-46a1-baa7-d6734fa2ac1b">
+        <omgdi:waypoint x="480.0" y="30.0"></omgdi:waypoint>
+        <omgdi:waypoint x="492.0" y="30.0"></omgdi:waypoint>
+        <omgdi:waypoint x="492.0" y="30.0"></omgdi:waypoint>
+        <omgdi:waypoint x="530.0" y="32.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sequenceFlow-34c0c89a-20de-47d0-b247-38f2b2d5ba77" id="BPMNEdge_sequenceFlow-34c0c89a-20de-47d0-b247-38f2b2d5ba77">
+        <omgdi:waypoint x="330.0" y="30.0"></omgdi:waypoint>
+        <omgdi:waypoint x="342.0" y="30.0"></omgdi:waypoint>
+        <omgdi:waypoint x="342.0" y="30.0"></omgdi:waypoint>
+        <omgdi:waypoint x="380.0" y="30.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sequenceFlow-66186015-2bd4-48d5-b695-648331202020" id="BPMNEdge_sequenceFlow-66186015-2bd4-48d5-b695-648331202020">
+        <omgdi:waypoint x="35.0" y="32.0"></omgdi:waypoint>
+        <omgdi:waypoint x="42.0" y="30.0"></omgdi:waypoint>
+        <omgdi:waypoint x="42.0" y="30.0"></omgdi:waypoint>
+        <omgdi:waypoint x="80.0" y="30.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

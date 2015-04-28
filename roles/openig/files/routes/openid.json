@@ -1,0 +1,85 @@
+{  
+   "heap":{  
+      "objects":[  
+	{
+	    "name": "CaptureFilter",
+	    "type": "CaptureFilter",
+	    "config": {
+		"file": "/tmp/xx.log"
+	    }
+	},
+         {  
+            "name":"GoogleOIDC",
+            "type":"Chain",
+            "config":{  
+               "filters":[  "CaptureFilter", "OpenIDConnectClient" ],
+               "handler": "OutgoingChain"
+            }
+         },
+ {
+                "name": "OpenIDConnectClient",
+                "type": "OAuth2ClientFilter",
+                "config": {
+                    "clientEndpoint": "/openid",
+                    "requireHttps": false,
+                    "requireLogin": true,
+                    "target": "${exchange.openid}",
+                    "scopes": [
+                        "openid",
+                        "profile"
+                    ],
+                    "failureHandler": "Dump",
+                    "providerHandler": "ClientHandler",
+                    "providers": [
+                        {
+                            "name": "openam",
+                            "wellKnownConfiguration":
+				"https://accounts.google.com/.well-known/openid-configuration",
+                            "clientId": "224470185996-5fgp0cm5nn9k6s0rn0va5f7gi9bolpo5.apps.googleusercontent.com",
+                            "clientSecret": "Te3sbJRkLLXwbT9kfWemZAy8"
+                        }
+                    ]
+                }
+            },
+
+  {
+                "name": "Dump",
+                "type": "Chain",
+                "config": {
+                    "filters": [
+                        "CaptureFilter"
+                    ],
+                    "handler": "DumpExchange"
+                }
+            },
+            {
+                "name": "DumpExchange",
+                "type": "ScriptableHandler",
+                "config": {
+                    "type": "application/x-groovy",
+                    "file": "DumpExchange.groovy"
+                }
+            },
+	 {
+              "name": "OutgoingChain",
+              "type": "Chain",
+               "config": {
+                    "filters": [
+                        "CaptureFilter"
+                    ],
+                    "handler": "ClientHandler"
+                }
+          },
+         {  
+            "name":"ClientHandler",
+            "type":"ClientHandler",
+            "config":{  
+            }
+         }
+      ]
+   },
+   "name": "openid",
+   "handler": "GoogleOIDC",
+ "condition": "${matches(exchange.request.uri.path, '^/openid')}",
+   "baseURI": "http://openam.example.com:2080/" 
+}

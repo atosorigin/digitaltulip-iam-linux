@@ -1,0 +1,12 @@
+---
+# Configure iptables. This is needed for vagrant
+- name: stop iptables
+  service: name=iptables state=stopped
+  
+- name: copy iptables.mgmt.conf to servers
+  copy: src=iptables-save dest=/etc/sysconfig/iptables owner=root group=root mode=0644
+  notify:
+      - restart iptables
+      
+- name: start iptables 
+  service: name=iptables state=started

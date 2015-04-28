@@ -1,0 +1,11 @@
+[tag_class_adserver]
+[tag_class_portalserver]
+[tag_class_haproxyserver]
+[tag_class_iamserver]
+
+
+[development:children]
+tag_class_adserver
+tag_class_portalserver
+tag_class_haproxyserver
+tag_class_iamserver

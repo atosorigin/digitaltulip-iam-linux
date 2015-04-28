@@ -1,0 +1,15 @@
+#Default variables
+
+tomcat_instance: tomcat1
+tomcat_parent: /var/lib/tomcats
+tomcat_instance_home: "{{ tomcat_parent }}/{{ tomcat_instance }}"
+tomcat_conf: "{{ tomcat_instance_home }}/conf"
+
+tomcat_base_port: 8000
+tomcat_admin_port: "{{ tomcat_base_port + 5}}"
+tomcat_http_port: "{{ tomcat_base_port + 80}}"
+tomcat_https_port: "{{ tomcat_base_port + 443}}"
+tomcat_ajp_port: "{{ tomcat_base_port + 9}}"
+tomcat_user: tomcat
+admin_username: admin
+admin_password: admin

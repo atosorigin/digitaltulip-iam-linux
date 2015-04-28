@@ -1,0 +1,17 @@
+---
+# Download software required for installation
+# TOODO: This is not complete. Not needed right now as we download to the host and mount that on the guest
+
+
+
+- name: download openam
+  get_url: url=${openam_dist} dest=${download_dir}/openam-dist.zip
+
+- name: unpack openam for later install
+  command: chdir=${download_dir} creates=${download_dir}/openam unzip openam-dist.zip -d openam
+  
+- name: download opendj rpm
+  get_url: url=${opendj_rpm} dest=${download_dir}/opendj.rpm
+  
+- name: download tomcat policy agent 
+  get_url: url=${tomcat_agent_zip} dest=${download_dir}/tomcat-agent.zip
