@@ -13,8 +13,6 @@ opendj_major: "OpenDJ-2.7.0"
 opendj_zip: "{{opendj_major}}-{{ansible_date_time.year}}{{ansible_date_time.month}}{{ansible_date_time.day}}.zip"
 opendj_download_url: "{{jenkins_url}}/{{opendj_zip}}"
 
-# Directory Manager password
-opendj_password: D1g1talTul1p
 # BaseDN
 opendj_basedn: "{{opendj_basedn}}"
 

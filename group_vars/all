@@ -52,12 +52,6 @@ openam_site_url: "https://iam.{{env}}.digitaltulip.net/openam"
 # Port where internal am instance is running
 openam_server_port: 8080 
 
-
-## todo: Put passwords in Ansible vault
-amadmin_password: D1g1talTul1p
-amldapuser_password: D1g1talTul1p
-amagentuser_password: Tul1pD1g1tal
-
 # OpenAM config location within embedded OpenDJ 
 openam_config_root: "dc={{env}},dc=digitaltulip,dc=net"
 base_user_dn : "cn=Users,{{openam_config_root}}"
@@ -65,8 +59,6 @@ base_user_dn : "cn=Users,{{openam_config_root}}"
 
 # OpenDJ base DN for user data store
 opendj_basedn: "dc={{env}},dc=digitaltulip,dc=net"
-# Datastore password. TODO: use ansible vault file
-opendj_password: D1g1talTul1p
 
 opendj_fqdn: "opendj.{{env}}.digitaltulip.net"
 opendj_dirmgr: "cn=Directory Manager" 
@@ -95,7 +87,6 @@ ad_port: 389
 tomcat_parent: "{{ install_root }}"
 
 windows_ssh_user: Administrator
-windows_ssh_pass: D1g1talTul1p
 
 owner_group: tomcat
 
