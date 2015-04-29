@@ -1,5 +1,5 @@
 {
-    "name" : "ad",
+    "name" : "AD",
     "connectorRef" : {
         "connectorHostRef" : "#LOCAL",
         "connectorName" : "org.identityconnectors.ldap.LdapConnector",
@@ -93,7 +93,7 @@
         "SCHEMA" : -1
     },
     "objectTypes" : {
-        "group" : {
+        "__GROUP__" : {
             "$schema" : "http://json-schema.org/draft-03/schema",
             "id" : "__GROUP__",
             "type" : "object",
@@ -104,125 +104,6 @@
                     "required" : true,
                     "nativeName" : "__NAME__",
                     "nativeType" : "JAVA_TYPE_DATE"
-                },
-                "cn" : {
-                    "type" : "string",
-                    "nativeName" : "cn",
-                    "nativeType" : "string",
-                    "flags" : [
-                        "NOT_CREATABLE",
-                        "NOT_UPDATEABLE"
-                    ]
-                },
-                "samAccountName" : {
-                    "type" : "string",
-                    "nativeName" : "samAccountName",
-                    "nativeType" : "string"
-                },
-                "groupType" : {
-                    "type" : "integer",
-                    "nativeName" : "groupType",
-                    "nativeType" : "JAVA_TYPE_INT"
-                },
-                "member" : {
-                    "type" : "array",
-                    "items" : {
-                        "type" : "string",
-                        "nativeType" : "string"
-                    },
-                    "nativeName" : "member",
-                    "nativeType" : "string"
-                },
-                "_memberId" : {
-                    "type" : "array",
-                    "items" : {
-                        "type" : "string",
-                        "nativeType" : "string"
-                    },
-                    "nativeName" : "_memberId",
-                    "nativeType" : "string",
-                    "flags" : [
-                        "NOT_CREATABLE",
-                        "NOT_UPDATEABLE"
-                    ]
-                },
-                "memberOf" : {
-                    "type" : "array",
-                    "items" : {
-                        "type" : "string",
-                        "nativeType" : "string"
-                    },
-                    "nativeName" : "memberOf",
-                    "nativeType" : "string",
-                    "flags" : [
-                        "NOT_CREATABLE",
-                        "NOT_UPDATEABLE"
-                    ]
-                },
-                "description" : {
-                    "type" : "string",
-                    "nativeName" : "description",
-                    "nativeType" : "string"
-                },
-                "mail" : {
-                    "type" : "string",
-                    "nativeName" : "mail",
-                    "nativeType" : "string"
-                },
-                "managedBy" : {
-                    "type" : "string",
-                    "nativeName" : "managedBy",
-                    "nativeType" : "string"
-                },
-                "displayName" : {
-                    "type" : "string",
-                    "nativeName" : "displayName",
-                    "nativeType" : "string",
-                    "flags" : [
-                        "NOT_CREATABLE",
-                        "NOT_UPDATEABLE"
-                    ]
-                },
-                "info" : {
-                    "type" : "string",
-                    "nativeName" : "info",
-                    "nativeType" : "string"
-                },
-                "uSNChanged" : {
-                    "type" : "string",
-                    "nativeName" : "uSNChanged",
-                    "nativeType" : "string",
-                    "flags" : [
-                        "NOT_CREATABLE",
-                        "NOT_UPDATEABLE"
-                    ]
-                },
-                "uSNCreated" : {
-                    "type" : "string",
-                    "nativeName" : "uSNCreated",
-                    "nativeType" : "string",
-                    "flags" : [
-                        "NOT_CREATABLE",
-                        "NOT_UPDATEABLE"
-                    ]
-                },
-                "whenChanged" : {
-                    "type" : "string",
-                    "nativeName" : "whenChanged",
-                    "nativeType" : "string",
-                    "flags" : [
-                        "NOT_CREATABLE",
-                        "NOT_UPDATEABLE"
-                    ]
-                },
-                "whenCreated" : {
-                    "type" : "string",
-                    "nativeName" : "whenCreated",
-                    "nativeType" : "string",
-                    "flags" : [
-                        "NOT_CREATABLE",
-                        "NOT_UPDATEABLE"
-                    ]
                 }
             }
         },
@@ -234,8 +115,21 @@
             "properties" : {
                 "__NAME__" : {
                     "type" : "string",
+                    "required" : true,
                     "nativeName" : "__NAME__",
-                    "nativeType" : "JAVA_TYPE_DATE",
+                    "nativeType" : "JAVA_TYPE_DATE"
+                },
+                "__PASSWORD__" : {
+                    "type" : "string",
+                    "nativeName" : "__PASSWORD__",
+                    "nativeType" : "JAVA_TYPE_GUARDEDSTRING",
+                    "flags" : [
+                        "NOT_RETURNED_BY_DEFAULT"
+                    ]
+                },"objectGUID" : {
+                    "type" : "string",
+                    "nativeName" : "objectGUID",
+                    "nativeType" : "string",
                     "flags" : [
                         "NOT_CREATABLE",
                         "NOT_UPDATEABLE"
@@ -481,7 +375,7 @@
                         "NOT_UPDATEABLE"
                     ]
                 },
-                "whenCreated" : {
+                 "whenCreated" : {
                     "type" : "string",
                     "nativeName" : "whenCreated",
                     "nativeType" : "string",
@@ -491,9 +385,24 @@
                     ]
                 }
             }
+        },
+        "__SERVER_INFO__" : {
+            "$schema" : "http://json-schema.org/draft-03/schema",
+            "id" : "__SERVER_INFO__",
+            "type" : "object",
+            "nativeType" : "__SERVER_INFO__",
+            "properties" : {
+                "__NAME__" : {
+                    "type" : "string",
+                    "required" : true,
+                    "nativeName" : "__NAME__",
+                    "nativeType" : "JAVA_TYPE_DATE"
+                }
+            }
         }
     },
     "operationOptions" : { },
-    "enable" : "provisioner.openicf-adldap",
-    "enabled" : true
+    "enabled" : true,
+    "enable" : "provisioner.openicf-adldap"
+    
 }

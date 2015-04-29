@@ -1,5 +1,35 @@
+---
 # Default ports. We change these so we dont collide with OpenAM, etc.
 openidm_port: 9080
 openidm_ssl_port: 9443
 install_root: /opt/ois
 download_dir: /var/tmp/staging
+
+authorisationroles:
+ securitymanagementusers:
+  description: Security Management Users
+  adgroup: CN=securitymanagementusers
+ costoptimisationusers:
+  description: Cost Optimisation Users
+  adgroup: CN=costoptimisationusers
+ applicationstoreusers:
+  description: Application Store Users
+  adgroup: CN=applicationstoreusers
+ serviceoverviewusers:
+  description: Service Overview Users
+  adgroup: CN=serviceoverviewusers
+ cloudstorageusers:
+  description: Cloud Storage Users
+  adgroup: CN=cloudstorageusers
+ crmusers:
+  description: CRM Users
+  adgroup: CN=crmusers
+ perfmanagementusers:
+  description: PerformanceManagement Users
+  adgroup: CN=perfmanagementusers
+ o365user:
+  description: Office 365 Users
+  adgroup: CN=O365Users
+ gappsuser:
+  description: Google App User
+  adgroup: CN=GoogleUsers

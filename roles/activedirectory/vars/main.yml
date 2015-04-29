@@ -1,0 +1,4 @@
+rootdomain: "{{env}}.digitaltulip.net"
+fqdn: "ad.{{env}}.digitaltulip.net"
+fqdsn: "DC={{env}},DC=digitaltulip,DC=net"
+netbios: "{{env}}digitaltulip"

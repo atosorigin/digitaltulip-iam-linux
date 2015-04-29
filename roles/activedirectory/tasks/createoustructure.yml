@@ -1,0 +1,494 @@
+--- 
+
+- name: Add dsadd 
+  raw: dsadd OU "OU=Admin,{{fqdsn}}" -desc "Placeholder OU for administrative objects and back office services delivered by Atos. Contents administrated by Atos service SME staff or automation tools."
+- name: Add dsadd
+  raw: dsadd OU "OU=AccAdm,OU=Admin,{{fqdsn}}" -desc "Placeholder for subsequent level OUs to hold Atos Admin Accounts"
+- name: Add dsadd
+  raw: dsadd OU "OU=Users,OU=AccAdm,OU=Admin,{{fqdsn}}" -desc "Placeholder for subsequent level OUs to hold Atos Support Accounts"
+- name: Add dsadd
+  raw: dsadd OU "OU=1LS,OU=Users,OU=AccAdm,OU=Admin,{{fqdsn}}" -desc "Designed to hold Atos 1LS user objects of users performing domain wide administration."
+- name: Add dsadd
+  raw: dsadd OU "OU=2LS,OU=Users,OU=AccAdm,OU=Admin,{{fqdsn}}" -desc "Designed to hold Atos 2LS user objects of users performing domain wide administration"
+- name: Add dsadd
+  raw: dsadd OU "OU=DBA,OU=Users,OU=AccAdm,OU=Admin,{{fqdsn}}" -desc "Designed to hold Atos user objects of users performing the role of DBA support"
+- name: Add dsadd
+  raw: dsadd OU "OU=Network,OU=Users,OU=AccAdm,OU=Admin,{{fqdsn}}" -desc "Designed to hold Atos user objects of users performing the role of Network support"
+- name: Add dsadd
+  raw: dsadd OU "OU=Storage,OU=Users,OU=AccAdm,OU=Admin,{{fqdsn}}" -desc "Designed to hold Atos user objects of users performing the role of Storage support."
+- name: Add dsadd
+  raw: dsadd OU "OU=Tools,OU=Users,OU=AccAdm,OU=Admin,{{fqdsn}}" -desc "Designed to hold Atos user objects of users performing the role of Tools support"
+- name: Add dsadd
+  raw: dsadd OU "OU=WebTech,OU=Users,OU=AccAdm,OU=Admin,{{fqdsn}}" -desc "Designed to hold Atos user objects of users performing the role of WebTech support"
+- name: Add dsadd
+  raw: dsadd OU "OU=WSSU,OU=Users,OU=AccAdm,OU=Admin,{{fqdsn}}" -desc "Designed to hold Atos user objects of users performing the role of WSSU or 3LS support"
+- name: Add dsadd
+  raw: dsadd OU "OU=Groups,OU=AccAdm,OU=Admin,{{fqdsn}}" -desc "Holds groups for delegating administrative access to services. Sub-OUs can be used to separate different group functions if required."
+- name: Add dsadd
+  raw: dsadd OU "OU=DelegatedGroups,OU=Groups,OU=AccAdm,OU=Admin,{{fqdsn}}" -desc "Designed to hold defined Atos group objects defined as delegated groups"
+- name: Add dsadd
+  raw: dsadd OU "OU=ADAccess,OU=DelegatedGroups,OU=Groups,OU=AccAdm,OU=Admin,{{fqdsn}}" -desc "Designed to hold defined Atos group objects defined as delegation groups for AD access and administration"
+- name: Add dsadd
+  raw: dsadd OU "OU=ServerAccess,OU=DelegatedGroups,OU=Groups,OU=AccAdm,OU=Admin,{{fqdsn}}" -desc "Designed to hold defined Atos group objects defined as delegation groups for server access and administration"
+- name: Add dsadd
+  raw: dsadd OU "OU=WorkStationAccess,OU=DelegatedGroups,OU=Groups,OU=AccAdm,OU=Admin,{{fqdsn}}" -desc "Designed to hold defined Atos group objects defined as delegation groups for workstation  administration"
+- name: Add dsadd
+  raw: dsadd OU "OU=Users&Computers,OU=DelegatedGroups,OU=Groups,OU=AccAdm,OU=Admin,{{fqdsn}}" -desc "Designed to hold defined Atos group objects defined as delegation groups for user and computer administration."
+- name: Add dsadd
+  raw: dsadd OU "OU=ApplicationGroups,OU=Groups,OU=AccAdm,OU=Admin,{{fqdsn}}" -desc "Placeholder for subsequent level Ous to hold Atos group objects defined as application groups"
+- name: Add dsadd
+  raw: dsadd OU "OU=RoleGroups,OU=Groups,OU=AccAdm,OU=Admin,{{fqdsn}}" -desc "Designed to hold defined Atos group objects defined as role groups"
+- name: Add dsadd
+  raw: dsadd OU "OU=Computers,OU=AccAdm,OU=Admin,{{fqdsn}}" -desc "Holds computer objects for devices used by Atos for service delivery. Workstations, Terminal Servers etc."
+- name: Add dsadd
+  raw: dsadd OU "OU=AccSvc,OU=Admin,{{fqdsn}}" -desc "Placeholder for subsequent level Ous to hold Atos Service Accounts"
+- name: Add dsadd
+  raw: dsadd OU "OU=Users,OU=AccSvc,OU=Admin,{{fqdsn}}" -desc "Holds Atos Service Accounts."
+- name: Add dsadd
+  raw: dsadd OU "OU=DomAdm,OU=Admin,{{fqdsn}}" -desc "Placeholder for subsequent level OUs to hold Atos Restricted Accounts"
+- name: Add dsadd
+  raw: dsadd OU "OU=Users,OU=DomAdm,OU=Admin,{{fqdsn}}" -desc "Holds user objects that Atos uses to administrate AD"
+- name: Add dsadd
+  raw: dsadd OU "OU=Groups,OU=DomAdm,OU=Admin,{{fqdsn}}" -desc "Holds Active Directory Admin related delegation groups"
+- name: Add dsadd
+  raw: dsadd OU "OU=Services,OU=Admin,{{fqdsn}}" -desc "Placeholder for subsequent level OUs to hold Atos Back Office Services"
+- name: Add dsadd
+  raw: dsadd OU "OU=ACSSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Placeholder entry point for subsequent level OUs to hold Cisco ACS Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=Groups,OU=ACSSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Cisco ACS Server application groups"
+- name: Add dsadd
+  raw: dsadd OU "OU=Servers,OU=ACSSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Cisco ACS Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=AppSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Placeholder entry point for subsequent level OUs to hold App Generic Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=Groups,OU=AppSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds App Generic Server application groups"
+- name: Add dsadd
+  raw: dsadd OU "OU=Servers,OU=AppSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds App Generic Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=APVSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Placeholder entry point for subsequent level OUs to hold MS App-V Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=Groups,OU=APVSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds MS App-V application groups"
+- name: Add dsadd
+  raw: dsadd OU "OU=Servers,OU=APVSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds MS App-V Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=BECSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Placeholder entry point for subsequent level OUs to hold Becrypt Enterprise Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=Groups,OU=BECSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Becrypt Enterprise application groups"
+- name: Add dsadd
+  raw: dsadd OU "OU=Servers,OU=BECSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Becrypt Worker Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=BESSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Placeholder entry point for subsequent level OUs to hold Blackberry Enterprise Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=Groups,OU=BESSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Blackberry Enterprise application groups"
+- name: Add dsadd
+  raw: dsadd OU "OU=Servers,OU=BESSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Blackberry Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=BIZSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Placeholder entry point for subsequent level OUs to hold Biztalk Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=Groups,OU=BIZSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Biztalk application groups"
+- name: Add dsadd
+  raw: dsadd OU "OU=Servers,OU=BIZSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Biztalk Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=BOASrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Placeholder entry point for subsequent level OUs to hold Business Objects Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=Groups,OU=BOASrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Business Objects application groups"
+- name: Add dsadd
+  raw: dsadd OU "OU=Servers,OU=BOASrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Business Objects Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=CACSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Placeholder entry point for subsequent level OUs to hold Citrix Application Controller Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=Groups,OU=CACSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Citrix Application Controller application groups"
+- name: Add dsadd
+  raw: dsadd OU "OU=Servers,OU=CACSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Citrix Application Controller Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=CDRSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Placeholder entry point for subsequent level OUs to hold Citrix Director Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=Groups,OU=CDRSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Citrix Director application groups"
+- name: Add dsadd
+  raw: dsadd OU "OU=Servers,OU=CDRSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Citrix Director Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=CDTSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Placeholder entry point for subsequent level OUs to hold Client Deployment Toolkit Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=Groups,OU=CDTSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Client Deployment Toolkit application groups"
+- name: Add dsadd
+  raw: dsadd OU "OU=Servers,OU=CDTSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Client Deployment Toolkit Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=CEHSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Placeholder entry point for subsequent level OUs to hold CA E-Health Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=Groups,OU=CEHSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds CA E-Health application groups"
+- name: Add dsadd
+  raw: dsadd OU "OU=Servers,OU=CEHSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds CA E-Health Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=CSFSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Placeholder entry point for subsequent level OUs to hold Citrix StoreFront Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=Groups,OU=CSFSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Citrix StoreFront application groups"
+- name: Add dsadd
+  raw: dsadd OU "OU=Servers,OU=CSFSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Citrix StoreFront Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=CSGSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Placeholder entry point for subsequent level OUs to hold Citrix NetScaler Secure Gateway Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=Groups,OU=CSGSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Citrix NetScaler Secure Gateway application groups"
+- name: Add dsadd
+  raw: dsadd OU "OU=Servers,OU=CSGSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Citrix NetScaler Secure Gateway Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=CSTSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Placeholder entry point for subsequent level OUs to hold Citrix Studio Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=Groups,OU=CSTSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Citrix Studio application groups"
+- name: Add dsadd
+  raw: dsadd OU "OU=Servers,OU=CSTSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Citrix Studio Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=CSZSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Placeholder entry point for subsequent level OUs to hold Citrix StorageZone Controller Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=Groups,OU=CSZSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Citrix StorageZone Controller application groups"
+- name: Add dsadd
+  raw: dsadd OU "OU=Servers,OU=CSZSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Citrix StorageZone Controller Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=DDCSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Placeholder entry point for subsequent level OUs to hold Desktop Delivery Controller Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=Groups,OU=DDCSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Desktop Delivery Controller application groups"
+- name: Add dsadd
+  raw: dsadd OU "OU=Servers,OU=DDCSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Desktop Delivery Controller Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=DHCSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Placeholder entry point for subsequent level OUs to hold ASC Multi Functional DHCP, DFS, File and Print Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=Groups,OU=DHCSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds ASC Multi Functional DHCP, DFS, File and Print application groups"
+- name: Add dsadd
+  raw: dsadd OU "OU=Servers,OU=DHCSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds ASC Multi Functional DHCP, DFS, File and Print Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=EPOSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Placeholder entry point for subsequent level OUs to hold McAfee EPO Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=Groups,OU=EPOSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds McAfee EPO application groups"
+- name: Add dsadd
+  raw: dsadd OU "OU=Servers,OU=EPOSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds McAfee EPO Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=EX2Srv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Placeholder entry point for subsequent level OUs to hold Exchange Combined Hub Transport and CAS Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=Groups,OU=EX2Srv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Exchange Combined Hub Transport and CAS application groups"
+- name: Add dsadd
+  raw: dsadd OU "OU=Servers,OU=EX2Srv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Exchange Combined Hub Transport and CAS Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=EXASrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Placeholder entry point for subsequent level OUs to hold Exchange Archiving Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=Groups,OU=EXASrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Exchange Archiving application groups"
+- name: Add dsadd
+  raw: dsadd OU "OU=Servers,OU=EXASrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Exchange Archiving Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=EXMSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Placeholder entry point for subsequent level OUs to hold Exchange Mailbox Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=Groups,OU=EXMSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Exchange Mailbox application groups"
+- name: Add dsadd
+  raw: dsadd OU "OU=Servers,OU=EXMSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Exchange Mailbox Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=FEDSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Placeholder entry point for subsequent level OUs to hold CA Federation Manager Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=Groups,OU=FEDSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds CA Federation Manager application groups"
+- name: Add dsadd
+  raw: dsadd OU "OU=Servers,OU=FEDSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds CA Federation Manager Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=FSSSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Placeholder entry point for subsequent level OUs to hold File Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=Groups,OU=FSSSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds File server application groups"
+- name: Add dsadd
+  raw: dsadd OU "OU=Servers,OU=FSSSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds File Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=FTPSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Placeholder entry point for subsequent level OUs to hold FTP Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=Groups,OU=FTPSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds FTP application groups"
+- name: Add dsadd
+  raw: dsadd OU "OU=Servers,OU=FTPSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds FTP Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=HPASrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Placeholder entry point for subsequent level OUs to hold HPAM Application Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=Groups,OU=HPASrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds HPAM application groups"
+- name: Add dsadd
+  raw: dsadd OU "OU=Servers,OU=HPASrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds HPAM Application Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=HPTSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Placeholder entry point for subsequent level OUs to hold HPAM Automation Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=Groups,OU=HPTSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds HPAM Automation application groups"
+- name: Add dsadd
+  raw: dsadd OU "OU=Servers,OU=HPTSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds HPAM Automation Application Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=HYVSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Placeholder entry point for subsequent level OUs to hold HyperV Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=Groups,OU=HYVSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds HyperV application groups"
+- name: Add dsadd
+  raw: dsadd OU "OU=Servers,OU=HYVSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds HyperV Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=KMSSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Placeholder entry point for subsequent level OUs to hold KMS Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=Groups,OU=KMSSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds KMS application groups"
+- name: Add dsadd
+  raw: dsadd OU "OU=Servers,OU=KMSSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds KMS Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=LICSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Placeholder entry point for subsequent level OUs to hold Licensing Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=Groups,OU=LICSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Licensing application groups"
+- name: Add dsadd
+  raw: dsadd OU "OU=Servers,OU=LICSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Licensing Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=LUMSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Placeholder entry point for subsequent level OUs to hold Lumension Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=Groups,OU=LUMSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Lumension application groups"
+- name: Add dsadd
+  raw: dsadd OU "OU=Servers,OU=LUMSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Lumension Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=MDMSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Placeholder entry point for subsequent level OUs to hold Mobile Device Manager Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=Groups,OU=MDMSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Mobile Device Manager application groups"
+- name: Add dsadd
+  raw: dsadd OU "OU=Servers,OU=MDMSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Mobile Device Manager Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=NMESrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Placeholder entry point for subsequent level OUs to hold Netbackup Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=Groups,OU=NMESrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Netbackup application groups"
+- name: Add dsadd
+  raw: dsadd OU "OU=Servers,OU=NMESrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Netbackup Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=ODBSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Placeholder entry point for subsequent level OUs to hold Oracle Database Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=Groups,OU=ODBSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Oracle Database application groups"
+- name: Add dsadd
+  raw: dsadd OU "OU=Servers,OU=ODBSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Oracle Database Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=OMGSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Placeholder entry point for subsequent level OUs to hold Ops Mgr Gateway SCOM Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=Groups,OU=OMGSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Ops Mgr Gateway SCOM Server application groups"
+- name: Add dsadd
+  raw: dsadd OU "OU=Servers,OU=OMGSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Ops Mgr Gateway SCOM Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=PRGSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Placeholder entry point for subsequent level OUs to hold Password Reset Gateway Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=Groups,OU=PRGSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Password Reset Gateway server application groups"
+- name: Add dsadd
+  raw: dsadd OU "OU=Servers,OU=PRGSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Password Reset Gateway Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=PRMSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Placeholder entry point for subsequent level OUs to hold Password Reset Management Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=Groups,OU=PRMSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Password Reset Management server application groups"
+- name: Add dsadd
+  raw: dsadd OU "OU=Servers,OU=PRMSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Password Reset Management Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=PRNSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Placeholder entry point for subsequent level OUs to hold Print Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=Groups,OU=PRNSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Print server application groups"
+- name: Add dsadd
+  raw: dsadd OU "OU=Servers,OU=PRNSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Print Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=PRWSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Placeholder entry point for subsequent level OUs to hold Password Reset Web Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=Groups,OU=PRWSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Password Reset Web server application groups"
+- name: Add dsadd
+  raw: dsadd OU "OU=Servers,OU=PRWSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Password Reset Web Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=PRVSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Placeholder entry point for subsequent level OUs to hold Citrix Provisioning Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=Groups,OU=PRVSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Citrix Provisioning application groups"
+- name: Add dsadd
+  raw: dsadd OU "OU=Servers,OU=PRVSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Citrix Provisioning Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=PXYSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Placeholder entry point for subsequent level OUs to hold Proxy Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=Groups,OU=PXYSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Proxy application groups"
+- name: Add dsadd
+  raw: dsadd OU "OU=Servers,OU=PXYSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Proxy Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=RDPSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Placeholder entry point for subsequent level OUs to hold Terminal Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=Groups,OU=RDPSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Terminal Server application groups"
+- name: Add dsadd
+  raw: dsadd OU "OU=Servers,OU=RDPSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Terminal Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=RSASrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Placeholder entry point for subsequent level OUs to hold RSA Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=Groups,OU=RSASrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds RSA Server application groups"
+- name: Add dsadd
+  raw: dsadd OU "OU=Servers,OU=RSASrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds RSA Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=SCASrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Placeholder entry point for subsequent level OUs to hold Subordinate Certificate Authority Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=Groups,OU=SCASrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Subordinate Certificate Authority Server application groups"
+- name: Add dsadd
+  raw: dsadd OU "OU=Servers,OU=SCASrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Subordinate Certificate Authority Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=SCMSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Placeholder entry point for subsequent level OUs to hold Sentinel Collector Manager"
+- name: Add dsadd
+  raw: dsadd OU "OU=Groups,OU=SCMSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Sentinel Collector Manager Server application groups"
+- name: Add dsadd
+  raw: dsadd OU "OU=Servers,OU=SCMSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Sentinel Collector Manager Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=SDMSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Placeholder entry point for subsequent level OUs to hold SDM and Service Catalog"
+- name: Add dsadd
+  raw: dsadd OU "OU=Groups,OU=SDMSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds SDM and Service Catalog application groups"
+- name: Add dsadd
+  raw: dsadd OU "OU=Servers,OU=SDMSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds SDM and Service Catalog Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=SMTSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Placeholder entry point for subsequent level OUs to hold SMTP Relay Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=Groups,OU=SMTSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds SMTP application groups"
+- name: Add dsadd
+  raw: dsadd OU "OU=Servers,OU=SMTSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds SMTP Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=SPPSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Placeholder entry point for subsequent level OUs to hold SharePoint Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=Groups,OU=SPPSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds SharePoint application groups"
+- name: Add dsadd
+  raw: dsadd OU "OU=Servers,OU=SPPSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds SharePoint Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=SQLSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Placeholder entry point for subsequent level OUs to hold SQL Database Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=Groups,OU=SQLSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds SQL Database Server application groups"
+- name: Add dsadd
+  raw: dsadd OU "OU=Servers,OU=SQLSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds SQL Database Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=UCSSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Placeholder entry point for subsequent level OUs to hold Unified Communication Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=Groups,OU=UCSSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Unified Communication application groups"
+- name: Add dsadd
+  raw: dsadd OU "OU=Servers,OU=UCSSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Unified Communication Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=VMMSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Placeholder entry point for subsequent level OUs to hold System Centre Virtual Machine Manager Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=Groups,OU=VMMSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds System Centre Virtual Machine Manager application groups"
+- name: Add dsadd
+  raw: dsadd OU "OU=Servers,OU=VMMSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds System Centre Virtual Machine Manager Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=VICSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Placeholder entry point for subsequent level OUs to hold Vmware vCenter Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=Groups,OU=VICSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Vmware vCenter Server application groups"
+- name: Add dsadd
+  raw: dsadd OU "OU=Servers,OU=VICSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Vmware vCenter Database Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=VIHSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Placeholder entry point for subsequent level OUs to hold Vmware ESX Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=Groups,OU=VIHSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Vmware ESX Server application groups"
+- name: Add dsadd
+  raw: dsadd OU "OU=Servers,OU=VIHSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Vmware ESX Database Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=VOISrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Placeholder entry point for subsequent level OUs to hold Voice Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=Groups,OU=VOISrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Voice Server application groups"
+- name: Add dsadd
+  raw: dsadd OU "OU=Servers,OU=VOISrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Voice Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=VUMSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Placeholder entry point for subsequent level OUs to hold Vmware Update Manager Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=Groups,OU=VUMSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Vmware Update Manager Server application groups"
+- name: Add dsadd
+  raw: dsadd OU "OU=Servers,OU=VUMSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Vmware Update Manager Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=VNXSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Placeholder entry point for subsequent level OUs to hold EMC Celerra VNX Data Mover Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=Groups,OU=VNXSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds EMC Celerra VNX Data Mover application groups"
+- name: Add dsadd
+  raw: dsadd OU "OU=Servers,OU=VNXSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds EMC Celerra VNX Data Mover Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=WDSSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Placeholder entry point for subsequent level OUs to hold Wyse Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=Groups,OU=WDSSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Wyse application groups"
+- name: Add dsadd
+  raw: dsadd OU "OU=Servers,OU=WDSSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Wyse Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=WEBSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Placeholder entry point for subsequent level OUs to hold Internet Information Web Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=Groups,OU=WEBSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Internet Information Web application groups"
+- name: Add dsadd
+  raw: dsadd OU "OU=Servers,OU=WEBSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Internet Information Web Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=WECSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Placeholder entry point for subsequent level OUs to hold WECS Sentinel Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=Groups,OU=WECSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds WECS Sentinel application groups"
+- name: Add dsadd
+  raw: dsadd OU "OU=Servers,OU=WECSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds WECS Sentinel Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=WIFSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Placeholder entry point for subsequent level OUs to hold Citrix Web Interface Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=Groups,OU=WIFSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Citrix web Interface application groups"
+- name: Add dsadd
+  raw: dsadd OU "OU=Servers,OU=WIFSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Citrix web Interface Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=WSUSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Placeholder entry point for subsequent level OUs to hold Windows Software Update Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=Groups,OU=WSUSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Windows Software Update application groups"
+- name: Add dsadd
+  raw: dsadd OU "OU=Servers,OU=WSUSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Windows Software Update Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=XDCSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Placeholder entry point for subsequent level OUs to hold Citrix XenApp Data Collector Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=Groups,OU=XDCSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Citrix XenApp Data Collector application groups"
+- name: Add dsadd
+  raw: dsadd OU "OU=Servers,OU=XDCSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Citrix XenApp Data Collector Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=XESSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Placeholder entry point for subsequent level OUs to hold Citrix EdgeSite Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=Groups,OU=XESSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Citrix EdgeSite application groups"
+- name: Add dsadd
+  raw: dsadd OU "OU=Servers,OU=XESSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Citrix EdgeSite Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=XXSSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Placeholder entry point for subsequent level OUs to hold Xen Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=Groups,OU=XXSSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Xen Server application groups"
+- name: Add dsadd
+  raw: dsadd OU "OU=Servers,OU=XXSSrv,OU=Services,OU=Admin,{{fqdsn}}" -desc "Holds Xen Servers"
+- name: Add dsadd
+  raw: dsadd OU "OU=Quarantine,OU=Admin,{{fqdsn}}" -desc "Placeholder for quarantine objects"
+- name: Add dsadd
+  raw: dsadd OU "OU=Managed,{{fqdsn}}" -desc "Placeholder OU for customer user, computer and group objects managed by Atos. Contents usually administrated by Atos service desk staff or automation tools. "
+- name: Add dsadd
+  raw: dsadd OU "OU=Servers,OU=Managed,{{fqdsn}}" -desc "Placeholder OU for customer server objects managed by Atos. Contents usually administrated by Atos service desk staff or automation tools. "
+- name: Add dsadd
+  raw: dsadd OU "OU=XenAppWorkers,OU=Servers,OU=Managed,{{fqdsn}}" -desc "Placeholder OU for customer server objects defined as XenAppWorkers managed by Atos. Contents usually administrated by Atos service desk staff or automation tools."
+- name: Add dsadd
+  raw: dsadd OU "OU=Commissioning,OU=XenAppWorkers,OU=Servers,OU=Managed,{{fqdsn}}" -desc "Placeholder OU for customer server objects defined as XenAppWorkers Commissioning managed by Atos. Contents usually administrated by Atos service desk staff or automation tools."
+- name: Add dsadd
+  raw: dsadd OU "OU=Live,OU=XenAppWorkers,OU=Servers,OU=Managed,{{fqdsn}}" -desc "Placeholder OU for customer server objects defined as XenAppWorkers Live managed by Atos. Contents usually administrated by Atos service desk staff or automation tools."
+- name: Add dsadd
+  raw: dsadd OU "OU=Trials,OU=XenAppWorkers,OU=Servers,OU=Managed,{{fqdsn}}" -desc "Placeholder OU for customer server objects defined as XenAppWorkers Trials managed by Atos. Contents usually administrated by Atos service desk staff or automation tools."
+- name: Add dsadd
+  raw: dsadd OU "OU=Users,OU=Managed,{{fqdsn}}" -desc "Placeholder OU for customer user objects managed by Atos. Contents usually administrated by Atos service desk staff or automation tools. "
+- name: Add dsadd
+  raw: dsadd OU "OU=TaskUsers,OU=Users,OU=Managed,{{fqdsn}}" -desc "OU for customer user objects defined as TaskUsers managed by Atos. Contents usually administrated by Atos service desk staff or automation tools. "
+- name: Add dsadd
+  raw: dsadd OU "OU=TabletUsers,OU=Users,OU=Managed,{{fqdsn}}" -desc "OU for customer user objects defined as TabletUsers managed by Atos. Contents usually administrated by Atos service desk staff or automation tools. "
+- name: Add dsadd
+  raw: dsadd OU "OU=MobileUsers,OU=Users,OU=Managed,{{fqdsn}}" -desc "OU for customer user objects defined as MobileUsers managed by Atos. Contents usually administrated by Atos service desk staff or automation tools. "
+- name: Add dsadd
+  raw: dsadd OU "OU=KnowledgeWorkers,OU=Users,OU=Managed,{{fqdsn}}" -desc "OU for customer user objects defined as KnowledgeWorkers managed by Atos. Contents usually administrated by Atos service desk staff or automation tools. "
+- name: Add dsadd
+  raw: dsadd OU "OU=LightUsers,OU=Users,OU=Managed,{{fqdsn}}" -desc "OU for customer user objects defined as LightUsers managed by Atos. Contents usually administrated by Atos service desk staff or automation tools. "
+- name: Add dsadd
+  raw: dsadd OU "OU=Developers,OU=Users,OU=Managed,{{fqdsn}}" -desc "OU for customer user objects defined as Developers managed by Atos. Contents usually administrated by Atos service desk staff or automation tools. "
+- name: Add dsadd
+  raw: dsadd OU "OU=KioskUsers,OU=Users,OU=Managed,{{fqdsn}}" -desc "OU for customer user objects defined as KioskUsers managed by Atos. Contents usually administrated by Atos service desk staff or automation tools. "
+- name: Add dsadd
+  raw: dsadd OU "OU=Computers,OU=Managed,{{fqdsn}}" -desc "Placeholder OU for customer computer objects managed by Atos. Contents usually administrated by Atos service desk staff or automation tools. "
+- name: Add dsadd
+  raw: dsadd OU "OU=Desktops,OU=Computers,OU=Managed,{{fqdsn}}" -desc "OU for customer computer objects defined as Desktop managed by Atos. Contents usually administrated by Atos service desk staff or automation tools. "
+- name: Add dsadd
+  raw: dsadd OU "OU=Laptops,OU=Computers,OU=Managed,{{fqdsn}}" -desc "OU for customer computer objects defined as Laptop managed by Atos. Contents usually administrated by Atos service desk staff or automation tools. "
+- name: Add dsadd
+  raw: dsadd OU "OU=DeveloperStations,OU=Computers,OU=Managed,{{fqdsn}}" -desc "OU for customer computer objects defined as DeveloperStations managed by Atos. Contents usually administrated by Atos service desk staff or automation tools. "
+- name: Add dsadd
+  raw: dsadd OU "OU=Tablets,OU=Computers,OU=Managed,{{fqdsn}}" -desc "OU for customer computer objects defined as Tablets managed by Atos. Contents usually administrated by Atos service desk staff or automation tools. "
+- name: Add dsadd
+  raw: dsadd OU "OU=TaskStations,OU=Computers,OU=Managed,{{fqdsn}}" -desc "OU for customer computer objects defined as TaskStations managed by Atos. Contents usually administrated by Atos service desk staff or automation tools. "
+- name: Add dsadd
+  raw: dsadd OU "OU=ThinClients,OU=Computers,OU=Managed,{{fqdsn}}" -desc "OU for customer computer objects defined as ThinClients managed by Atos. Contents usually administrated by Atos service desk staff or automation tools. "
+- name: Add dsadd
+  raw: dsadd OU "OU=Groups,OU=Managed,{{fqdsn}}" -desc "Placeholder OU for customer group objects managed by Atos. Contents usually administrated by Atos service desk staff or automation tools. "
+- name: Add dsadd
+  raw: dsadd OU "OU=RoleGroups,OU=Groups,OU=Managed,{{fqdsn}}" -desc "OU for customer group objects defined as RoleGroups managed by Atos. Contents usually administrated by Atos service desk staff or automation tools. "
+- name: Add dsadd
+  raw: dsadd OU "OU=PrinterGroups,OU=Groups,OU=Managed,{{fqdsn}}" -desc "OU for customer group objects defined as PrinterGroups managed by Atos. Contents usually administrated by Atos service desk staff or automation tools. "
+- name: Add dsadd
+  raw: dsadd OU "OU=PolicyGroups,OU=Groups,OU=Managed,{{fqdsn}}" -desc "OU for customer group objects defined as PolicyGroups managed by Atos. Contents usually administrated by Atos service desk staff or automation tools. "
+- name: Add dsadd
+  raw: dsadd OU "OU=ApplicationGroups,OU=Groups,OU=Managed,{{fqdsn}}" -desc "OU for customer group objects defined as ApplicationGroups managed by Atos. Contents usually administrated by Atos service desk staff or automation tools. "
+- name: Add dsadd
+  raw: dsadd OU "OU=Delegated,{{fqdsn}}" -desc "Optional Placeholder OU for Self Provider (for customer-administrated infrastructure)"
+- name: Add dsadd
+  raw: dsadd OU "OU=Groups,OU=Delegated,{{fqdsn}}" -desc "Placeholder OU for Self Provider (for customer-administrated infrastructure) group objects."
+- name: Add dsadd
+  raw: dsadd OU "OU=Servers,OU=Delegated,{{fqdsn}}" -desc "Placeholder OU for Self Provider (for customer-administrated infrastructure) server objects."
+- name: Add dsadd
+  raw: dsadd OU "OU=Users,OU=Delegated,{{fqdsn}}" -desc "Placeholder OU for Self Provider (for customer-administrated infrastructure) user objects."

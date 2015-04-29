@@ -1,0 +1,18 @@
+---
+# Installs the AD
+# create necessary steps for Active Directory Install
+- win_feature:
+    name: "AD-Domain-Services"
+    include_management_tools: true
+    include_sub_features: true
+    state: present
+- win_feature:
+    name: "DNS"
+    include_management_tools: true
+    include_sub_features: true
+    state: present
+    reboot: yes
+- name: Add AD Forest
+  script: install_ad_forest.ps1
+
+#- include: createoustructure.yml

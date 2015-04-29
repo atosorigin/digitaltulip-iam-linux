@@ -10,6 +10,12 @@
   register: command_result
   failed_when: command_result|failed and 'no service' not in command_result.msg
 
+- name: Kill any remaining processes
+  command: pgrep -f openidm
+  register : pid
+
+- command: kill -9 {{pid.stdout}}
+
 - name: remove any old openidm instance 
   file: path={{install_root}}/openidm state=absent
 
@@ -33,10 +39,27 @@
   template: src=provisioner.openicf-adldap.json dest={{install_root}}/openidm/conf/provisioner.openicf-adldap.json
 
 - name: create service start up script
-  template: src=openidm dest=/etc/init.d/openidm  mode=0755
+  command: "{{install_root}}/openidm/bin/create-openidm-rc.sh"
+
+- name: copy script to init.d
+  command : mv {{install_root}}/openidm/bin/openidm /etc/init.d/openidm
 
 - name: Change ownership of openidm to fr user
   file: path={{ install_root }}/openidm owner={{ fr_user }} state=directory recurse=yes
 
+- name : Add Start and Kill Scripts to run levels
+  command : update-rc.d openidm defaults
+
 - name: Enable openidm service
   service: name=openidm state=restarted enabled=yes
+
+- name: Wait for service 
+  wait_for: port=9080 delay=10
+
+- name: wait for open am 
+  wait_for: port=9080 delay=30
+
+
+- name: Create Roles
+  command : "curl -X POST -H \"Content-Type: application/json\"  -H \"X-OpenIDM-Username: openidm-admin\" -H \"X-OpenIDM-Password: openidm-admin\" -H \"Cache-Control: no-cache\" -d '{\"properties\":{\"description\": \"{{ item.value.description }}\"},\"name\": \"{{item.key}}\",\"_id\": \"{{item.key}}\",\"assignments\": {\"ad\": {\"attributes\": [{\"name\": \"memberOf\",\"assignmentOperation\": \"mergeWithTarget\",\"unassignmentOperation\": \"removeFromTarget\",\"value\": [\"{{item.value.adgroup}},CN=Users,DC=digitaltulip,DC=net\"]}]}}}' http://{{openam_fqdn}}/openidm/managed/role?_action=create  "
+  with_dict: authorisationroles

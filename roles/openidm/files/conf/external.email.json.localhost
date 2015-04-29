@@ -1,7 +1,0 @@
-{
-    "host" : "localhost",
-    "port" : "25",
-    "from" : "ois@openrock.org",
-    "mail.smtp.auth" : "false",
-    "mail.smtp.starttls.enable" : "false"
-}

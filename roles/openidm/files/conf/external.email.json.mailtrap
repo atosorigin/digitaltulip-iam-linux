@@ -1,9 +1,0 @@
-{
-   "host":"mailtrap.io",
-   "port":"25",
-   "username":"your mailtrap username",
-   "password":"Your password here",
-   "from":"noreply@openidm.example.com",
-   "mail.smtp.auth":"true",
-   "mail.smtp.starttls.enable":"false"
-}

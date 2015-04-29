@@ -72,7 +72,7 @@
                         "type" : "text/javascript",
                         "file" : "auth/populateAsManagedUser.js"
                     },
-                    "queryOnResource" : "system/ldap/account",
+                    "queryOnResource" : "system/AD/account",
                     "propertyMapping" : {
                         "authenticationId" : "uid"
                     },

@@ -1,9 +1,9 @@
 {
     "mappings" : [
-        {
-            "name" : "systemADAccounts_managedUser",
-            "source" : "system/ad/account",
+       {
             "target" : "managed/user",
+            "source" : "system/AD/__ACCOUNT__",
+            "name" : "sourceAd__ACCOUNT___managedUser",
             "properties" : [
                 {
                     "source" : "sAMAccountName",
@@ -26,71 +26,63 @@
                     "source" : "sn"
                 }
             ]
-        },
-        {
-            "name" : "managedUser_systemADAccounts",
-            "source" : "managed/user",
-            "target" : "system/ad/account",
-            "links" : "systemADAccounts_managedUser",
-            "properties" : [
-                {
-                    "source" : "userName",
-                    "target" : "sAMAccountName"
-                },
-                {
-                    "source" : "lastname",
-                    "target" : "sn"
-                },
-                {
-                    "source" : "firstname",
-                    "target" : "givenName"
-                },
-                {
-                    "source" : "__NAME__",
-                    "target" : "__NAME__"
-                },
-                {
-                    "target" : "memberOf",
-                    "source" : "memberOf"
-                },
-                {
-                    "target" : "dn"
-                }
-            ],
+,
             "policies" : [
                 {
-                    "situation" : "CONFIRMED",
-                    "action" : "IGNORE"
+                    "action" : "CREATE",
+                    "situation" : "ABSENT"
                 },
                 {
-                    "situation" : "FOUND",
-                    "action" : "IGNORE"
+                    "action" : "ASYNC",
+                    "situation" : "ALL_GONE"
                 },
                 {
-                    "situation" : "ABSENT",
-                    "action" : "CREATE"
+                    "action" : "ASYNC",
+                    "situation" : "AMBIGUOUS"
                 },
                 {
-                    "situation" : "AMBIGUOUS",
-                    "action" : "IGNORE"
+                    "action" : "ASYNC",
+                    "situation" : "CONFIRMED"
                 },
                 {
-                    "situation" : "MISSING",
-                    "action" : "IGNORE"
+                    "action" : "ASYNC",
+                    "situation" : "FOUND"
                 },
                 {
-                    "situation" : "SOURCE_MISSING",
-                    "action" : "IGNORE"
+                    "action" : "ASYNC",
+                    "situation" : "FOUND_ALREADY_LINKED"
                 },
                 {
-                    "situation" : "UNQUALIFIED",
-                    "action" : "IGNORE"
+                    "action" : "ASYNC",
+                    "situation" : "LINK_ONLY"
                 },
                 {
-                    "situation" : "UNASSIGNED",
-                    "action" : "IGNORE"
+                    "action" : "ASYNC",
+                    "situation" : "MISSING"
+                },
+                {
+                    "action" : "ASYNC",
+                    "situation" : "SOURCE_IGNORED"
+                },
+                {
+                    "action" : "ASYNC",
+                    "situation" : "SOURCE_MISSING"
+                },
+                {
+                    "action" : "ASYNC",
+                    "situation" : "TARGET_IGNORED"
+                },
+                {
+                    "action" : "ASYNC",
+                    "situation" : "UNASSIGNED"
+                },
+                {
+                    "action" : "ASYNC",
+                    "situation" : "UNQUALIFIED"
                 }
             ]
         }
+
+
     ]
 }
