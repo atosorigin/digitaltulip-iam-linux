@@ -18,6 +18,8 @@
 # Put roles here that need to be run on every host in stack
 
 - hosts: tag_class_{{env}}-iamserver
+  vars_files:
+   - "vars/enc.yml"
   remote_user: ubuntu
   sudo: yes
   roles:
@@ -25,6 +27,8 @@
    - { role: install-base-apt, when: ansible_os_family == 'Debian', tags: ["common"]}
 # Play for ha-proxy server. 
 - hosts: tag_class_{{env}}-haproxyserver
+  vars_files:
+   - "vars/enc.yml"
   remote_user: ubuntu
   sudo: yes
   roles:
@@ -38,6 +42,7 @@
   sudo: yes
   vars_files: 
     - "vars/{{release}}.yml"
+    - "vars/enc.yml"
   roles:
    - { role: tomcat, tomcat_instance: 'openam', tomcat_base_port: 8000, tags: ["tomcat", "openam"]}
    - { role: tomcat, tomcat_instance: 'openig', tomcat_base_port: 2000, tags: ["tomcat", "openig"]}
