@@ -16,7 +16,7 @@
 
 - name: Kill openidm process
   command: kill -9 {{pid.stdout}}
-  when: pid.stdout.strip() !+ ""
+  when: pid.stdout.strip() != ""
 
 - name: remove any old openidm instance 
   file: path={{install_root}}/openidm state=absent
