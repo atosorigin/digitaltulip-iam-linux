@@ -10,12 +10,13 @@
   register: command_result
   failed_when: command_result|failed and 'no service' not in command_result.msg
 
-- name: Kill any remaining processes
+- name: Find any remaining openidm processes
   command: pgrep -f openidm
   register : pid
 
-- command: kill -9 {{pid.stdout}}
-  when: pid 
+- name: Kill openidm process
+  command: kill -9 {{pid.stdout}}
+  when: pid.stdout.strip() !+ ""
 
 - name: remove any old openidm instance 
   file: path={{install_root}}/openidm state=absent
