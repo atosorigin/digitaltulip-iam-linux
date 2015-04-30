@@ -59,6 +59,10 @@
      - jar -uf {{ download_dir }}/openam/OpenAM-12.0.0.war -C {{ download_dir }}/openam/ XUI/images/digitaltulip.png
      - jar -uf {{ download_dir }}/openam/OpenAM-12.0.0.war -C {{ download_dir }}/openam/ XUI/images/AtosHome.png
      - jar -uf {{ download_dir }}/openam/OpenAM-12.0.0.war -C {{ download_dir }}/openam/ XUI/templates/common/LoginBaseTemplate.html
+     - jar -uf {{ download_dir }}/openam/OpenAM-12.0.0.war -C {{ download_dir }}/openam/ ldif/ad/ad_config_schema.ldif
+     - jar -uf {{ download_dir }}/openam/OpenAM-12.0.0.war -C {{ download_dir }}/openam/ ldif/ad/ad_user_schema.ldif
+     - jar -uf {{ download_dir }}/openam/OpenAM-12.0.0.war -C {{ download_dir }}/openam/ ldif/ad/ad_deviceprint.ldif
+     - jar -uf {{ download_dir }}/openam/OpenAM-12.0.0.war -C {{ download_dir }}/openam/ ldif/ad/ad_dashboard.ldif
 
 # create install dir, openam dir
 - name: Change owner of install folder to {{ fr_user }}
@@ -91,7 +95,7 @@
   command: java -jar {{ download_dir }}/openam/openam-configurator-tool-{{ openam_version }}.jar  -f {{ download_dir }}/openam/openam.properties --acceptLicense
 
 - name: Change Active Directory Schema
-  command: ldapmodify -a -h {{ad_host}} -p {{ad_port}} -D {{ldap_bind_user}} -w {{amldapuser_password}} -f {{item}}
+  command: ldapmodify -a -h {{ad_host}} -p {{ad_port}} -D {{ldap_bind_user}} -w {{amldapuser_password}} -f {{ tomcat_openam_dir}}/{{item}}
   with_items:
   - "ad_config_schema.ldif"
   - "ad_user_schema.ldif"
