@@ -12,7 +12,7 @@
   
 # Create ssoadm tools 
 - name: setup ssoadm tools
-  command: chdir={{ install_root }}/ssoadmin {{ install_root }}/ssoadmin/setup -p /home/fr/openam --acceptLicense
+  command: chdir={{ install_root }}/ssoadmin {{ install_root }}/ssoadmin/setup -p {{install_root}}/openam --acceptLicense
   environment:
     JAVA_HOME: "{{java_home}}"
 
