@@ -13,10 +13,12 @@
 - name: Find any remaining openidm processes
   command: pgrep -f openidm
   register : pid
+  ignore_errors: yes
 
 - name: Kill openidm process
   command: kill -9 {{pid.stdout}}
   when: pid.stdout.strip() != ""
+  ignore_errors: yes
 
 - name: remove any old openidm instance 
   file: path={{install_root}}/openidm state=absent
