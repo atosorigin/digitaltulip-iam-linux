@@ -97,3 +97,4 @@
   - "ad_user_schema.ldif"
   - "ad_deviceprint.ldif"
   - "ad_dashboard.ldif"
+  ignore_errors: yes
