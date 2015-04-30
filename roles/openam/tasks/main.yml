@@ -27,16 +27,6 @@
     - "{{ download_dir }}/openam/XUI/images"
     - "{{ download_dir }}/openam/XUI/templates/"
     - "{{ download_dir }}/openam/XUI/templates/common"
-    - "{{ download_dir }}/openam/ldif/"
-    - "{{ download_dir }}/openam/ldif/ad"
-
-- name: copy ldifs file over
-  template: src="{{item}}" dest={{ download_dir }}/openam/ldif/ad/
-  with_items:
-    - ad_config_schema.ldif
-    - ad_user_schema.ldif
-    - ad_deviceprint.ldif
-    - ad_dashboard.ldif
 
 
 - name : Copy over theme config
@@ -59,11 +49,7 @@
      - jar -uf {{ download_dir }}/openam/OpenAM-12.0.0.war -C {{ download_dir }}/openam/ XUI/images/digitaltulip.png
      - jar -uf {{ download_dir }}/openam/OpenAM-12.0.0.war -C {{ download_dir }}/openam/ XUI/images/AtosHome.png
      - jar -uf {{ download_dir }}/openam/OpenAM-12.0.0.war -C {{ download_dir }}/openam/ XUI/templates/common/LoginBaseTemplate.html
-     - jar -uf {{ download_dir }}/openam/OpenAM-12.0.0.war -C {{ download_dir }}/openam/ ldif/ad/ad_config_schema.ldif
-     - jar -uf {{ download_dir }}/openam/OpenAM-12.0.0.war -C {{ download_dir }}/openam/ ldif/ad/ad_user_schema.ldif
-     - jar -uf {{ download_dir }}/openam/OpenAM-12.0.0.war -C {{ download_dir }}/openam/ ldif/ad/ad_deviceprint.ldif
-     - jar -uf {{ download_dir }}/openam/OpenAM-12.0.0.war -C {{ download_dir }}/openam/ ldif/ad/ad_dashboard.ldif
-
+     
 # create install dir, openam dir
 - name: Change owner of install folder to {{ fr_user }}
   file: path={{ tomcat_openam_dir }}/webapps owner={{ fr_user }} group={{owner_group}} state=directory recurse=yes
@@ -93,6 +79,16 @@
 
 - name: run silent configurator
   command: java -jar {{ download_dir }}/openam/openam-configurator-tool-{{ openam_version }}.jar  -f {{ download_dir }}/openam/openam.properties --acceptLicense
+
+
+- name: copy ldifs file over
+  template: src="{{item}}" dest={{ tomcat_openam_dir }}/ldif/ad/
+  with_items:
+    - ad_config_schema.ldif
+    - ad_user_schema.ldif
+    - ad_deviceprint.ldif
+    - ad_dashboard.ldif
+
 
 - name: Change Active Directory Schema
   command: ldapmodify -a -h {{ad_host}} -p {{ad_port}} -D {{ldap_bind_user}} -w {{amldapuser_password}} -f {{ tomcat_openam_dir}}/ldif/ad/{{item}}
