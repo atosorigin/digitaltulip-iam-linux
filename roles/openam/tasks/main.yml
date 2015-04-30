@@ -31,7 +31,7 @@
     - "{{ download_dir }}/openam/ldif/ad"
 
 - name: copy ldifs file over
-  template: src="{{item}}" dest={{ download_dir }}/openam/ldif/ad/{{item}}
+  template: src="{{item}}" dest={{ download_dir }}/openam/ldif/ad/
   with_items:
     - ad_config_schema.ldif
     - ad_user_schema.ldif
@@ -95,7 +95,7 @@
   command: java -jar {{ download_dir }}/openam/openam-configurator-tool-{{ openam_version }}.jar  -f {{ download_dir }}/openam/openam.properties --acceptLicense
 
 - name: Change Active Directory Schema
-  command: ldapmodify -a -h {{ad_host}} -p {{ad_port}} -D {{ldap_bind_user}} -w {{amldapuser_password}} -f {{ tomcat_openam_dir}}/ad/{{item}}
+  command: ldapmodify -a -h {{ad_host}} -p {{ad_port}} -D {{ldap_bind_user}} -w {{amldapuser_password}} -f {{ tomcat_openam_dir}}/ldif/ad/{{item}}
   with_items:
   - "ad_config_schema.ldif"
   - "ad_user_schema.ldif"
