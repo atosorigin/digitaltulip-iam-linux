@@ -95,7 +95,7 @@
   command: java -jar {{ download_dir }}/openam/openam-configurator-tool-{{ openam_version }}.jar  -f {{ download_dir }}/openam/openam.properties --acceptLicense
 
 - name: Change Active Directory Schema
-  command: ldapmodify -a -h {{ad_host}} -p {{ad_port}} -D {{ldap_bind_user}} -w {{amldapuser_password}} -f {{ tomcat_openam_dir}}/{{item}}
+  command: ldapmodify -a -h {{ad_host}} -p {{ad_port}} -D {{ldap_bind_user}} -w {{amldapuser_password}} -f {{ tomcat_openam_dir}}/ad/{{item}}
   with_items:
   - "ad_config_schema.ldif"
   - "ad_user_schema.ldif"
