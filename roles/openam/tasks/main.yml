@@ -12,10 +12,6 @@
 
 - lineinfile: dest="/etc/hosts" line="127.0.0.1 server1.{{openam_fqdn}}"
 
-
-
-
-
 - name: unpack openam
   unarchive: src={{ download_dir }}/{{ openam_zip_file }} dest={{ download_dir }} copy=no
 
@@ -31,6 +27,16 @@
     - "{{ download_dir }}/openam/XUI/images"
     - "{{ download_dir }}/openam/XUI/templates/"
     - "{{ download_dir }}/openam/XUI/templates/common"
+    - "{{ download_dir }}/openam/ldif/"
+    - "{{ download_dir }}/openam/ldif/ad"
+
+- name: copy ldifs file over
+  template: src="{{item}}" dest={{ download_dir }}/openam/ldif/ad/{{item}}
+  with_items:
+    - ad_config_schema.ldif
+    - ad_user_schema.ldif
+    - ad_deviceprint.ldif
+    - ad_dashboard.ldif
 
 
 - name : Copy over theme config
@@ -83,3 +89,11 @@
 
 - name: run silent configurator
   command: java -jar {{ download_dir }}/openam/openam-configurator-tool-{{ openam_version }}.jar  -f {{ download_dir }}/openam/openam.properties --acceptLicense
+
+- name: Change Active Directory Schema
+  command: ldapmodify -a -h {{ad_host}} -p {{ad_port}} -D {{ldap_bind_user}} -w {{amldapuser_password}} -f {{item}}
+  with_items:
+  - "ad_config_schema.ldif"
+  - "ad_user_schema.ldif"
+  - "ad_deviceprint.ldif"
+  - "ad_dashboard.ldif"

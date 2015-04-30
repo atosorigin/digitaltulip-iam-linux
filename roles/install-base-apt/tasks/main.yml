@@ -13,3 +13,4 @@
   with_items:
     - zip
     - openjdk-7-jdk
+    - ldap-utils
