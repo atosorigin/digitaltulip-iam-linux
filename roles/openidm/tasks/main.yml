@@ -15,6 +15,7 @@
   register : pid
 
 - command: kill -9 {{pid.stdout}}
+  when: pid 
 
 - name: remove any old openidm instance 
   file: path={{install_root}}/openidm state=absent
