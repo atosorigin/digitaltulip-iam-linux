@@ -72,4 +72,4 @@
   with_dict: authorisationroles
 
 - name: Perform Sync 
-  command : "curl -X POST -H \"Content-Type: application/json\" -H \"X-OpenIDM-Username: openidm-admin\" -H \"X-OpenIDM-Password: {{amldapuser_password}}\" -d \"\" \"http://{{openam_fqdn}}/openidm/recon?_action=recon&mapping=sourceAd__ACCOUNT___managedUser"
+  command : "curl -X POST -H \"Content-Type: application/json\" -H \"X-OpenIDM-Username: openidm-admin\" -H \"X-OpenIDM-Password: {{amldapuser_password}}\" -d \"\" \"http://{{openam_fqdn}}/openidm/recon?_action=recon&mapping=sourceAd__ACCOUNT___managedUser\""
