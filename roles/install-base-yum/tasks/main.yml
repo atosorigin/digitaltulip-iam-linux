@@ -18,6 +18,7 @@
    - zip
    - gpg
    - java-1.7.0-openjdk-devel
+   - python
    - python-pip
    - openldap-clients
    - libselinux-python
