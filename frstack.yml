@@ -33,6 +33,8 @@
   remote_user: teamcity
   sudo: yes
   roles:
+    - { role: install-base-apt, when: ansible_os_family == 'Debian', tags: ["common"]}
+    - { role: install-base-yum, when: ansible_os_family == 'RedHat', tags: ["common"]}
     - { role: haproxy, tags: ["http","haproxy"]}
 
 # These are more specific to each host
