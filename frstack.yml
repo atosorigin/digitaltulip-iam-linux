@@ -23,8 +23,9 @@
   remote_user: teamcity
   sudo: yes
   roles:
-   - create-fr-user
    - { role: install-base-apt, when: ansible_os_family == 'Debian', tags: ["common"]}
+   - { role: install-base-yum, when: ansible_os_family == 'RedHat', tags: ["common"]}
+   - create-fr-user
 # Play for ha-proxy server. 
 - hosts: tag_class_{{env}}-haproxyserver
   vars_files:
