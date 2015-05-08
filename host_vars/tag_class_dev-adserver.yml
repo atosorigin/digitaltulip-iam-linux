@@ -1,0 +1,2 @@
+ec2_private_ip_address : 192.168.2.4
+ec2_tag_dnsname : ad.dev.digitaltulip.net
