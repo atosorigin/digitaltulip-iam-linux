@@ -20,4 +20,4 @@
    - java-1.7.0-openjdk-devel
    - python-pip
    - openldap-clients
-   - python-selinux
+   - libselinux-python
