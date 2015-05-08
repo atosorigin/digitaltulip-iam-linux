@@ -19,5 +19,5 @@
    - gpg
    - java-1.7.0-openjdk-devel
    - python-pip
-   - ldap-utils
+   - openldap-clients
    - python-selinux
