@@ -47,9 +47,9 @@
     - "vars/{{release}}.yml"
     - "vars/enc.yml"
   roles:
-   - { role: tomcat, when: ansible_os_family == 'Debian', tomcat_instance: 'openam', tomcat_base_port: 8000, tags: ["tomcat", "openam"]}
-   - { role: tomcat, when: ansible_os_family == 'Debian', tomcat_instance: 'openig', tomcat_base_port: 2000, tags: ["tomcat", "openig"]}
-   - { role: tomcat, when: ansible_os_family == 'Debian', tomcat_instance: 'apps', tomcat_base_port: 3000, tags: ["tomcat", "apps"]}
+#   - { role: tomcat, when: ansible_os_family == 'Debian', tomcat_instance: 'openam', tomcat_base_port: 8000, tags: ["tomcat", "openam"]}
+#   - { role: tomcat, when: ansible_os_family == 'Debian', tomcat_instance: 'openig', tomcat_base_port: 2000, tags: ["tomcat", "openig"]}
+#   - { role: tomcat, when: ansible_os_family == 'Debian', tomcat_instance: 'apps', tomcat_base_port: 3000, tags: ["tomcat", "apps"]}
    - { role: tomcat-centos, when: ansible_os_family == 'RedHat', tomcat_instance: 'openam', tomcat_base_port: 8000, tags: ["tomcat", "openam"]}
    - { role: tomcat-centos, when: ansible_os_family == 'RedHat', tomcat_instance: 'openig', tomcat_base_port: 2000, tags: ["tomcat", "openig"]}
    - { role: tomcat-centos, when: ansible_os_family == 'RedHat', tomcat_instance: 'apps', tomcat_base_port: 3000, tags: ["tomcat", "apps"]}

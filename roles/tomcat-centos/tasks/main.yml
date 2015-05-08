@@ -24,7 +24,7 @@
     
 - name: Set JAVA_OPTS in /etc/tomcat/tomcat.conf
   lineinfile: dest=/etc/tomcat/tomcat.conf  regexp='^JAVA_OPTS' line='JAVA_OPTS="-Xmx1024m -XX:MaxPermSize=256m"'
-    
+
 - name: Copy the tomcat defaults to {{tomcat_conf}}
   command: cp "/etc/tomcat/{{item}}" "{{tomcat_conf}}"
   with_items:
