@@ -20,7 +20,7 @@
 - hosts: tag_class_{{env}}-iamserver
   vars_files:
    - "vars/enc.yml"
-  remote_user: ubuntu
+  remote_user: teamcity
   sudo: yes
   roles:
    - create-fr-user
@@ -29,7 +29,7 @@
 - hosts: tag_class_{{env}}-haproxyserver
   vars_files:
    - "vars/enc.yml"
-  remote_user: ubuntu
+  remote_user: teamcity
   sudo: yes
   roles:
     - { role: haproxy, tags: ["http","haproxy"]}
@@ -38,7 +38,7 @@
 # oisa /oisb - servers a and b - for failover
 # ois - both servers
 - hosts: tag_class_{{env}}-iamserver
-  remote_user: ubuntu
+  remote_user: teamcity
   sudo: yes
   vars_files: 
     - "vars/{{release}}.yml"
