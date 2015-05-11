@@ -35,7 +35,7 @@
 # Bit of hack. The previous command waits for the port -but AM could still be deploying
 # So this waits another 30 seconds to be safe
 - name: wait for open am 
-  wait_for: port={{openam_server_port}} delay=30
+  wait_for: port={{openam_server_port}} delay=60
 
 - name: copy password file
   template: src=pwd.txt dest="{{install_root}}/ssoadmin/openam/bin/pwd.txt" owner="{{fr_user}}" mode=400 
