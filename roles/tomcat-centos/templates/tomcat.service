@@ -16,7 +16,7 @@
 
 ## Source function library.
 #. /etc/rc.d/init.d/functions
-export JAVA_HOME=/usr/bin/java
+export JAVA_HOME=/usr
 export JAVA_OPTS="-Dfile.encoding=UTF-8 \
   -Dnet.sf.ehcache.skipUpdateCheck=true \
   -XX:+UseConcMarkSweepGC \
