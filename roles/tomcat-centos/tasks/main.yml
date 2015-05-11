@@ -8,40 +8,88 @@
 # relative to this base IP. E.g. see defaults/main.yml
 
 
-- name: Install tomcat
-  yum: name=tomcat state=latest  
-  environment:
-    proxy_env
+#- name: Install tomcat
+#  yum: name=tomcat state=latest  
+#  environment:
+#    proxy_env
 
-- name: create instance dir and sub dir
-  command: mkdir -p "{{ tomcat_parent }}/{{ tomcat_instance }}/{{item}}"
-  with_items:
-    - conf
-    - webapps
-    - logs 
-    - temp
-    - work
-    
-- name: Set JAVA_OPTS in /etc/tomcat/tomcat.conf
-  lineinfile: dest=/etc/tomcat/tomcat.conf  regexp='^JAVA_OPTS' line='JAVA_OPTS="-Xmx1024m -XX:MaxPermSize=256m"'
+#- name: create instance dir and sub dir
+#  command: mkdir -p "{{ tomcat_parent }}/{{ tomcat_instance }}/{{item}}"
+#  with_items:
+#    - conf
+#    - webapps
+#    - logs 
+#    - temp
+#    - work
 
-- name: Copy the tomcat defaults to {{tomcat_conf}}
-  command: cp "/etc/tomcat/{{item}}" "{{tomcat_conf}}"
-  with_items:
-    - web.xml
-    - context.xml
-    - catalina.policy
-    - catalina.properties
-             
-- name: Configure Tomcat server.xml to set ports, etc.
-  template: src=server.xml dest={{tomcat_conf}}
+#- name: Set JAVA_OPTS in /etc/tomcat/tomcat.conf
+#  lineinfile: dest=/etc/tomcat/tomcat.conf  regexp='^JAVA_OPTS' line='JAVA_OPTS="-Xmx1024m -XX:MaxPermSize=256m"'
+
+#- name: Copy the tomcat defaults to {{tomcat_conf}}
+#  command: cp "/etc/tomcat/{{item}}" "{{tomcat_conf}}"
+#  with_items:
+#    - web.xml
+#    - context.xml
+#    - catalina.policy
+#    - catalina.properties
+
+#- name: Configure Tomcat server.xml to set ports, etc.
+#  template: src=server.xml dest={{tomcat_conf}}
+
+#- name: Configure Tomcat users
+#  template: src=tomcat-users.xml dest={{tomcat_conf}}
+
+#- name: Change ownership of Tomcat installation
+#  file: path={{ tomcat_instance_home }} owner={{ tomcat_user }} state=directory recurse=yes
+
+#- name: Enable  and start Tomcat
+#  service: name="tomcat@{{ tomcat_instance }}.service" state=restarted enabled=yes
+
+--- 
+# Download tomcat 
+# name: download tomcat 
+
+- include: ../../download.yml download_file={{tomcat_archive}} download_url={{tomcat_download_url}}
+
+- file: path={{tomcat_parent}} state=directory owner={{ fr_user}} group={{owner_group}}
+
+- name: Extract tomcat archive
+  command: tar -xvf {{download_dir }}/{{tomcat_archive}} -C {{ tomcat_parent }}
+
+- name: Disable {{ tomcat_instance }} service
+  service: name={{ tomcat_instance }} state=stopped enabled=no
+  register: command_result
+  failed_when: "command_result|failed and 'no service' not in command_result.msg"
+
+- name: remove any old tomcat instance 
+  file: path={{tomcat_instance_dir}} state=absent
+
+- name: mv tomcat instance into place
+  command: mv -f {{tomcat_parent}}/apache-tomcat-{{ tomcat_version }} {{ tomcat_instance_dir}}
+
+- name: change folder permissions
+  file : path={{ tomcat_instance_dir}} group="{{owner_group}}" owner="{{ fr_user}}" recurse=yes state=directory
+
+- name: check instance path is present  
+  file: path={{tomcat_instance_dir}} state=directory
+
+- name: Configure Tomcat server
+  template: src=server.xml dest={{ tomcat_parent }}/{{ tomcat_instance }}/conf/ group={{owner_group}} owner={{ fr_user}}
 
 - name: Configure Tomcat users
-  template: src=tomcat-users.xml dest={{tomcat_conf}}
- 
-- name: Change ownership of Tomcat installation
-  file: path={{ tomcat_instance_home }} owner={{ tomcat_user }} state=directory recurse=yes
+  template: src=tomcat-users.xml dest={{ tomcat_instance_dir }}/conf/ group="{{owner_group}}" owner="{{ fr_user}}"
 
-- name: Enable  and start Tomcat
-  service: name="tomcat@{{ tomcat_instance }}.service" state=restarted enabled=yes
+#- name: cp setenv.sh to set jvm params
+#  copy: src=setenv.sh dest="{{ tomcat_instance_dir }}/bin"
 
+- name: Install Tomcat init script
+  template: src=tomcat.service  dest=/etc/systemd/system/{{tomcat_instance}}.service mode=u+rw
+
+- name: reload services
+  command: sudo systemctl daemon-reload
+
+- name: Start Tomcat
+  service: name={{ tomcat_instance }} state=restarted enabled=yes
+
+- name: wait for tomcat to start
+  wait_for: port={{ tomcat_http_port }} delay=10
