@@ -33,7 +33,7 @@ install_root: /opt/ois
 
 # Java home on the guest. We use openjdk by default. This is the default location. 
 #java_home: /usr/lib/jvm/java-7-openjdk-amd64
-java_home: /etc/alternatives/java
+java_home: /usr/lib/jvm/java-1.7.0-openjdk.x86_64
 
 # Config defaults
 
