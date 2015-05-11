@@ -36,7 +36,7 @@
 #  copy: src=setenv.sh dest="{{ tomcat_instance_dir }}/bin"
 
 - name: Install Tomcat init script
-  template: src=tomcat.service  dest=/etc/init.d/{{tomcat_instance}} mode=u+rw
+  template: src=tomcat.service  dest=/etc/init.d/{{tomcat_instance}} mode=u+rwx
 
 - name: Start Tomcat
   service: name={{ tomcat_instance }} state=restarted enabled=yes
