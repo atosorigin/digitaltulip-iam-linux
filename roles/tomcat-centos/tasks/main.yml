@@ -36,10 +36,7 @@
 #  copy: src=setenv.sh dest="{{ tomcat_instance_dir }}/bin"
 
 - name: Install Tomcat init script
-  template: src=tomcat.service  dest=/etc/systemd/system/{{tomcat_instance}}.service mode=u+rw
-
-- name: reload services
-  command: sudo systemctl daemon-reload
+  template: src=tomcat.service  dest=/etc/init.d/{{tomcat_instance}} mode=u+rw
 
 - name: Start Tomcat
   service: name={{ tomcat_instance }} state=restarted enabled=yes
