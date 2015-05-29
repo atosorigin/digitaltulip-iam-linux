@@ -12,6 +12,6 @@ tomcat_https_port: "{{ tomcat_base_port + 443}}"
 tomcat_ajp_port: "{{ tomcat_base_port + 9}}"
 tomcat_user: fr
 admin_username: admin
-tomcat_version: "8.0.20"
+tomcat_version: "8.0.22"
 tomcat_archive: "apache-tomcat-{{ tomcat_version }}.tar.gz"
 tomcat_download_url: "http://www.mirrorservice.org/sites/ftp.apache.org/tomcat/tomcat-8/v{{ tomcat_version }}/bin/{{ tomcat_archive }}"
