@@ -53,6 +53,7 @@
 
 - name : Add Start and Kill Scripts to run levels
   command : update-rc.d openidm defaults
+  when: ansible_os_family == 'Debian'
 
 - name: Enable openidm service
   service: name=openidm state=restarted enabled=yes

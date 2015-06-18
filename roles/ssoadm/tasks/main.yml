@@ -34,8 +34,6 @@
 
 # Bit of hack. The previous command waits for the port -but AM could still be deploying
 # So this waits another 30 seconds to be safe
-- name: wait for open am 
-  wait_for: port={{openam_server_port}} delay=30
 
 - name: copy password file
   template: src=pwd.txt dest="{{install_root}}/ssoadmin/openam/bin/pwd.txt" owner="{{fr_user}}" mode=400 
@@ -51,13 +49,14 @@
 - name: copy hosted extra xml
   template: src=iamhosted_extra.xml dest="{{install_root}}/ssoadmin/openam/bin/iamhosted_extra.xml"
 
-
-
 - name: copy datastore.configuration
   template: src="datastore.config" dest="{{install_root}}/ssoadmin/openam/bin/datastore.config"
 
 - template: src=ssoadm-patch dest="{{install_root}}/ssoadmin/openam/bin/" mode=0755 owner={{fr_user}}
 - command: chdir="{{install_root}}/ssoadmin/openam/bin" ./ssoadm-patch 
+
+- name: wait for open am 
+  wait_for: port={{openam_server_port}} delay=60
 
 - name: create realm
   command: "{{ install_root }}/ssoadmin/openam/bin/ssoadm create-realm --realm {{realm}} -u amadmin -f {{ install_root }}/ssoadmin/openam/bin/pwd.txt"

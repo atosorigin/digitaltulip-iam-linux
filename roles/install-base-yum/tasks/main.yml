@@ -15,30 +15,9 @@
     proxy_env
   with_items:
    - unzip
-   - git
-   - wget
-   - haproxy
-   - httpd
-   - tomcat8
+   - zip
    - gpg
    - java-1.7.0-openjdk-devel
-   - python-pip
-# PIP is not on Centos 7?
-
- 
-# Why do we need httplib2 ?
-#- name: Install additional python packages
-#  pip: name=httplib2
-    
-
-# Note that 127.0.0.2 is also routable to localhost
-- name: Put our fqdn and short hostname in /etc/hosts
-  lineinfile: dest="/etc/hosts" line="127.0.0.2 {{openam_fqdn}} {{openam_hostname}}" regexp="{{openam_fqdn}}"  state=present
-  
-- name: create top level software dir
-  file: state=directory path={{install_root}} owner={{fr_user}} mode=0755
-  
-
-# This is not in Centos7  - so ignore any errors
-- service: name=firewalld state=stopped enabled=no
-  ignore_errors: yes
+   - python
+   - openldap-clients
+   - libselinux-python

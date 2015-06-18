@@ -1,0 +1,2 @@
+ec2_private_ip_address : 192.168.2.3
+ec2_tag_dnsname : portal.dev.digitaltulip.net

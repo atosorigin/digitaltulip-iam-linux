@@ -20,33 +20,40 @@
 - hosts: tag_class_{{env}}-iamserver
   vars_files:
    - "vars/enc.yml"
-  remote_user: ubuntu
+  remote_user: teamcity
   sudo: yes
   roles:
-   - create-fr-user
    - { role: install-base-apt, when: ansible_os_family == 'Debian', tags: ["common"]}
+   - { role: install-base-yum, when: ansible_os_family == 'RedHat', tags: ["common"]}
+   - create-fr-user
 # Play for ha-proxy server. 
 - hosts: tag_class_{{env}}-haproxyserver
   vars_files:
    - "vars/enc.yml"
-  remote_user: ubuntu
+  remote_user: teamcity
   sudo: yes
   roles:
+    - { role: install-base-apt, when: ansible_os_family == 'Debian', tags: ["common"]}
+    - { role: install-base-yum, when: ansible_os_family == 'RedHat', tags: ["common"]}
     - { role: haproxy, tags: ["http","haproxy"]}
 
 # These are more specific to each host
 # oisa /oisb - servers a and b - for failover
 # ois - both servers
 - hosts: tag_class_{{env}}-iamserver
-  remote_user: ubuntu
+  remote_user: teamcity
   sudo: yes
   vars_files: 
     - "vars/{{release}}.yml"
     - "vars/enc.yml"
   roles:
-   - { role: tomcat, tomcat_instance: 'openam', tomcat_base_port: 8000, tags: ["tomcat", "openam"]}
-   - { role: tomcat, tomcat_instance: 'openig', tomcat_base_port: 2000, tags: ["tomcat", "openig"]}
-   - { role: tomcat, tomcat_instance: 'apps', tomcat_base_port: 3000, tags: ["tomcat", "apps"]}
+#   - { role: tomcat,  tomcat_instance: 'openam', tomcat_base_port: 8000, tags: ["tomcat", "openam"]}
+#   - { role: tomcat,  tomcat_instance: 'openig', tomcat_base_port: 2000, tags: ["tomcat", "openig"]}
+#   - { role: tomcat,  tomcat_instance: 'apps', tomcat_base_port: 3000, tags: ["tomcat", "apps"]}
+   - { role: tomcat-centos, when: ansible_os_family == 'RedHat', tomcat_instance: 'openam', tomcat_base_port: 8000, tags: ["tomcat", "openam"]}
+   - { role: tomcat-centos, when: ansible_os_family == 'RedHat', tomcat_instance: 'openig', tomcat_base_port: 2000, tags: ["tomcat", "openig"]}
+   - { role: tomcat-centos, when: ansible_os_family == 'RedHat', tomcat_instance: 'apps', tomcat_base_port: 3000, tags: ["tomcat", "apps"]}
+  #
   # - { role: opendj, tags: ["opendj"]}
    - { role: openidm, tags: ["openidm"]}
    - { role: openam,  tomcat_openam_dir: "{{tomcat_parent}}/openam", tags: ["openam"]}

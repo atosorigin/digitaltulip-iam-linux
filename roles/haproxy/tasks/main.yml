@@ -11,9 +11,16 @@
 
 - name: Install haproxy
   apt_repository : repo="ppa:vbernat/haproxy-1.5" state=present
+  when: ansible_os_family == 'Debian'
 
 - name: Install proxy
   apt: name=haproxy state=latest
+  when: ansible_os_family == 'Debian'
+
+- name: Install proxy
+  yum: name=haproxy state=latest
+  when: ansible_os_family == 'RedHat'
+
 
 - name: copy haproxy.cfg
   template: src=haproxy.cfg dest=/etc/haproxy/haproxy.cfg owner=root
