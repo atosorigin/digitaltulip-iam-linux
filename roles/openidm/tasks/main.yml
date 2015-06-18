@@ -62,7 +62,7 @@
   wait_for: port=9080 delay=10
 
 - name: wait for open am 
-  wait_for: port=9080 delay=30
+  wait_for: port=9080 delay=60
 
 
 - name: Change Admin Pwd
