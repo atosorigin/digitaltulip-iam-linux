@@ -37,6 +37,7 @@
             <Value>uid=uid</Value>
             <Value>givenName=givenName</Value>
             <Value>sn=sn</Value>
+            <Value>isDeployed=isDeployed</Value>
         </Attribute>
         <Attribute name="autofedAttribute"/>
         <Attribute name="saml2AuthModuleName"/>

@@ -88,6 +88,7 @@
     - ad_user_schema.ldif
     - ad_deviceprint.ldif
     - ad_dashboard.ldif
+    - ad_isdeployed.ldif
 
 
 - name: Change Active Directory Schema
@@ -97,4 +98,5 @@
   - "ad_user_schema.ldif"
   - "ad_deviceprint.ldif"
   - "ad_dashboard.ldif"
+  - "ad_isdeployed.ldif"
   ignore_errors: yes
