@@ -1,10 +1,17 @@
 dn: CN=isDeployed, CN=Schema,CN=Configuration,{{openam_config_root}}
 changetype: add
-attributeID: 1.3.6.1.4.1.43.2.27.5.1.60
+adminDisplayName: isDeployed
+adminDescription: isDeployed for a person
+attributeID: 1.3.6.1.4.1.1466.101.120.99
 attributeSyntax: 2.5.5.8
+cn: isDeployed
+instanceType: 4
 isSingleValued: TRUE
 searchFlags: 1
 lDAPDisplayName: isDeployed
 adminDescription: This attribute determines whether a resource is deployed
+objectCategory: CN=Attribute-Schema,CN=Schema,CN=Configuration,{{openam_config_root}}
 objectClass: attributeSchema
+schemaIDGUID:: Lll3FEzgpkehgTdDxY/8IA==
+systemOnly: FALSE
 oMSyntax: 27
