@@ -12,6 +12,18 @@ lDAPDisplayName: isDeployed
 adminDescription: This attribute determines whether a resource is deployed
 objectCategory: CN=Attribute-Schema,CN=Schema,CN=Configuration,{{openam_config_root}}
 objectClass: attributeSchema
-schemaIDGUID:: Lll3FEzgpkehgTdDxY/8IA==
+schemaIDGUID:: Lll3FzgokehgTdDxY/8IA==
 systemOnly: FALSE
 oMSyntax: 27
+-
+
+dn:
+changetype: modify
+add: schemaUpdateNow
+schemaUpdateNow: 1
+-
+
+dn: CN=User,CN=Schema,CN=Configuration,{{openam_config_root}}
+changetype: modify
+add: mayContain
+mayContain: isDeployed

@@ -33,3 +33,6 @@ authorisationroles:
  gappsuser:
   description: Google App User
   adgroup: CN=GoogleUsers
+ gearthuser:
+  description: Google Earth User
+  adgroup: CN=googleearthusers
