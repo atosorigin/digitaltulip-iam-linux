@@ -25,7 +25,7 @@
   file : path=/etc/pki/tls/private state=directory
 
 - name: create self-signed SSL cert for haproxy
-  command: creates=/etc/pki/tls/certs/haproxy.crt openssl req -new -nodes -x509 -subj "/C=CA/ST=AB/L=Calgary/O=ForgeRock/CN=iam.{{env}}.digitaltulip.net" -days 3650 
+  command: creates=/etc/pki/tls/certs/haproxy.crt openssl req -new -nodes -x509 -subj "/C=CA/ST=AB/L=Calgary/O=ForgeRock/CN=iam.{{env}}.canopy-cloud.com" -days 3650 
     -keyout /etc/pki/tls/private/haproxy.key -out /etc/pki/tls/certs/haproxy.crt 
     -extensions v3_ca  
 
@@ -33,12 +33,12 @@
   shell: chdir=/etc/pki/tls creates=/etc/pki/tls/haproxy.pem /bin/cat certs/haproxy.crt private/haproxy.key > /etc/pki/tls/haproxy.pem 
   # we ignore errors because this is not idempotent
 - name: Delete any old certificate 
-  command:  keytool -delete -noprompt -alias iam.{{env}}.digitaltulip.net -storepass changeit -keystore /etc/pki/java/cacerts
+  command:  keytool -delete -noprompt -alias iam.{{env}}.canopy-cloud.com -storepass changeit -keystore /etc/pki/java/cacerts
   ignore_errors: yes
 
 # we ignore errors because this is not idempotent
 - name: Import the cert into java keystore for openam use. Ignore errors if this is run a second time
-  command:  keytool -importcert -noprompt -alias iam.{{env}}.digitaltulip.net -storepass changeit -file /etc/pki/tls/certs/haproxy.crt -trustcacerts -keystore /etc/pki/java/cacerts
+  command:  keytool -importcert -noprompt -alias iam.{{env}}.canopy-cloud.com -storepass changeit -file /etc/pki/tls/certs/haproxy.crt -trustcacerts -keystore /etc/pki/java/cacerts
   ignore_errors: yes
 
 - name: Start haproxy

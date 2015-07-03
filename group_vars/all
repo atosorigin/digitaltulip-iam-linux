@@ -43,24 +43,24 @@ java_home: /usr/lib/jvm/java-7-openjdk-amd64
 openam_hostname: "iam"
 
 ### OpenAM ####
-openam_cookie_domain: ".{{env}}.digitaltulip.net"
-openam_fqdn: iam.{{env}}.digitaltulip.net
-portal_fqdn: portal.{{env}}.digitaltulip.net
+openam_cookie_domain: ".{{env}}.canopy-cloud.com"
+openam_fqdn: iam.{{env}}.canopy-cloud.com
+portal_fqdn: portal.{{env}}.canopy-cloud.com
 
 # Site URL. This is the load balancer URL (haproxy) - not the URL of the openam instance
-openam_site_url: "https://iam.{{env}}.digitaltulip.net/openam"
+openam_site_url: "https://iam.{{env}}.canopy-cloud.com/openam"
 # Port where internal am instance is running
 openam_server_port: 8080 
 
 # OpenAM config location within embedded OpenDJ 
-openam_config_root: "dc={{env}},dc=digitaltulip,dc=net"
+openam_config_root: "dc={{env}},dc=canopy-cloud,dc=com"
 base_user_dn : "cn=Users,{{openam_config_root}}"
 #### OpenDJ #######
 
 # OpenDJ base DN for user data store
-opendj_basedn: "dc={{env}},dc=digitaltulip,dc=net"
+opendj_basedn: "dc={{env}},dc=canopy-cloud,dc=com"
 
-opendj_fqdn: "opendj.{{env}}.digitaltulip.net"
+opendj_fqdn: "opendj.{{env}}.canopy-cloud.com"
 opendj_dirmgr: "cn=Directory Manager" 
 
 # These ovveride opendj role settings
@@ -76,7 +76,7 @@ openam_admin_port: 14444
 openam_jmx_port: 11689
 
 
-ad_host: "ad.{{env}}.digitaltulip.net"
+ad_host: "ad.{{env}}.canopy-cloud.com"
 ad_port: 389
 # Tomcat 
 
@@ -91,7 +91,7 @@ windows_ssh_user: Administrator
 owner_group: tomcat
 
 realm: ActiveDirectory
-circleoftrust: DigitalTulip
+circleoftrust: CanopyCloud
 
 
 ldap_bind_user : "cn=Administrator,cn=Users,{{opendj_basedn}}"
