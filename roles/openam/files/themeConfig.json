@@ -84,7 +84,7 @@
                         "width": "120px"
                     },
                     "lessVars": {
-                        "background-color": "#eee",
+                        "background-color": "blue",
                         "background-image": "",
                         "background-repeat": "no-repeat",
                         "background-position": "950px -100px",
