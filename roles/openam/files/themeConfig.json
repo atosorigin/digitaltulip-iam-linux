@@ -85,7 +85,7 @@
                     },
                     "lessVars": {
                         "background-color": "blue",
-                        "background-image": "",
+                        "background-image": "url("www.canopy-cloud.com/sites/all/themes/canopytheme/images/clouds.jpg")",
                         "background-repeat": "no-repeat",
                         "background-position": "950px -100px",
                         "footer-background-color": "rgba(238, 238, 238, 0.7)",
@@ -97,7 +97,7 @@
                         "site-width": "960px",
                         "message-background-color": "#fff",
                         "content-background": "#f9f9f9",
-                        "font-color": "#5a646d",
+                        "font-color": "white",
                         "font-size": "14px",
                         "font-family": "Arial, Helvetica, sans-serif",
                         "line-height": "18px",
