@@ -77,7 +77,7 @@
                 "icon": "favicon.ico",
                 "settings": {
                     "logo": {
-                        "src": "images/canopy-logo.png",
+                        "src": "http://canopy-cloud.com/sites/all/themes/canopytheme/images/logo.png",
                         "title": "Canopy",
                         "alt": "Canopy",
                         "height": "49px",
