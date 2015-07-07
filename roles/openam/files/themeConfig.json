@@ -85,7 +85,7 @@
                     },
                     "lessVars": {
                         "background-color": "blue",
-                        "background-image": "url("www.canopy-cloud.com/sites/all/themes/canopytheme/images/clouds.jpg")",
+                        "background-image": "",
                         "background-repeat": "no-repeat",
                         "background-position": "950px -100px",
                         "footer-background-color": "rgba(238, 238, 238, 0.7)",
