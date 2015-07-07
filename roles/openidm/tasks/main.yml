@@ -64,12 +64,12 @@
   wait_for: port=9080 delay=30
 
 
-- name: Change Admin Pwd
-  command : "curl -X PUT -H \"Content-Type: application/json\"  -H \"X-OpenIDM-Username: openidm-admin\" -H \"X-OpenIDM-Password: openidm-admin\" -H \"Cache-Control: no-cache\" -d '{\"password\":\"{{amldapuser_password}}\", \"userName\":\"openidm-admin\",\"roles\":\"openidm-admin,openidm-authorized\",\"_id\":\"openidm-admin\"}' http://{{openam_fqdn}}/openidm/repo/internal/user/openidm-admin"
+#- name: Change Admin Pwd
+#  command : "curl -X PUT -H \"Content-Type: application/json\"  -H \"X-OpenIDM-Username: openidm-admin\" -H \"X-OpenIDM-Password: openidm-admin\" -H \"Cache-Control: no-cache\" -d '{\"password\":\"{{amldapuser_password}}\", \"userName\":\"openidm-admin\",\"roles\":\"openidm-admin,openidm-authorized\",\"_id\":\"openidm-admin\"}' http://{{openam_fqdn}}/openidm/repo/internal/user/openidm-admin"
 
 - name: Create Roles
-  command : "curl -X POST -H \"Content-Type: application/json\"  -H \"X-OpenIDM-Username: openidm-admin\" -H \"X-OpenIDM-Password: {{amldapuser_password}}\" -H \"Cache-Control: no-cache\" -d '{\"properties\":{\"description\": \"{{ item.value.description }}\"},\"name\": \"{{item.key}}\",\"_id\": \"{{item.key}}\",\"assignments\": {\"ad\": {\"attributes\": [{\"name\": \"memberOf\",\"assignmentOperation\": \"mergeWithTarget\",\"unassignmentOperation\": \"removeFromTarget\",\"value\": [\"{{item.value.adgroup}},CN=Users,DC=canopy-cloud,DC=com\"]}]}}}' http://{{openam_fqdn}}/openidm/managed/role?_action=create  "
+  command : "curl -X POST -H \"Content-Type: application/json\"  -H \"X-OpenIDM-Username: openidm-admin\" -H \"X-OpenIDM-Password: openidm-admin\" -H \"Cache-Control: no-cache\" -d '{\"properties\":{\"description\": \"{{ item.value.description }}\"},\"name\": \"{{item.key}}\",\"_id\": \"{{item.key}}\",\"assignments\": {\"ad\": {\"attributes\": [{\"name\": \"memberOf\",\"assignmentOperation\": \"mergeWithTarget\",\"unassignmentOperation\": \"removeFromTarget\",\"value\": [\"{{item.value.adgroup}},CN=Users,DC=canopy-cloud,DC=com\"]}]}}}' http://{{openam_fqdn}}/openidm/managed/role?_action=create  "
   with_dict: authorisationroles
 
 - name: Perform Sync 
-  command : "curl -X POST -H \"Content-Type: application/json\" -H \"X-OpenIDM-Username: openidm-admin\" -H \"X-OpenIDM-Password: {{amldapuser_password}}\" -d \"\" \"http://{{openam_fqdn}}/openidm/recon?_action=recon&mapping=sourceAd__ACCOUNT___managedUser\""
+  command : "curl -X POST -H \"Content-Type: application/json\" -H \"X-OpenIDM-Username: openidm-admin\" -H \"X-OpenIDM-Password: openidm-admin\" -d \"\" \"http://{{openam_fqdn}}/openidm/recon?_action=recon&mapping=sourceAd__ACCOUNT___managedUser\""
