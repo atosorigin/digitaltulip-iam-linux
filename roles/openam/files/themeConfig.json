@@ -96,7 +96,7 @@
                         "medium-container-width": "592px",
                         "site-width": "960px",
                         "message-background-color": "#fff",
-                        "content-background": "#f9f9f9",
+                        "content-background": "white",
                         "font-color": "#0066a2",
                         "font-size": "14px",
                         "font-family": "Arial, Helvetica, sans-serif",
