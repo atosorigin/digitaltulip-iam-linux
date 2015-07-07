@@ -77,11 +77,11 @@
                 "icon": "favicon.ico",
                 "settings": {
                     "logo": {
-                        "src": "images/digitaltulip.png",
-                        "title": "DigitalTulip",
-                        "alt": "DigitalTulip",
-                        "height": "80px",
-                        "width": "120px"
+                        "src": "images/canopy-logo.png",
+                        "title": "Canopy",
+                        "alt": "Canopy",
+                        "height": "49px",
+                        "width": "178px"
                     },
                     "lessVars": {
                         "background-color": "#f6f5f5",
