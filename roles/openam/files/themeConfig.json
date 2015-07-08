@@ -122,10 +122,10 @@
                         "header-border-color": "#5D5D5D",
 
 
-                        "footer-height": "-55px"
+                        "footer-height": "0px"
                     },
                     "footer": {
-                        "mailto": "info@canopy-cloud.com",
+                        "mailto": "",
                         "phone": ""
                     }
                 }
