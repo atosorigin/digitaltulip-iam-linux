@@ -74,7 +74,7 @@
                 "path": "",
                 "realms": [".*"],
                 "regex": true,
-                "icon": "favicon.ico",
+                "icon": "http://canopy-cloud.com/sites/default/files/favicon.ico",
                 "settings": {
                     "logo": {
                         "src": "http://canopy-cloud.com/sites/all/themes/canopytheme/images/logo.png",
