@@ -41,6 +41,8 @@
 - name : Copy over LoginBaseTemplate for skinning
   copy: src=LoginBaseTemplate.html dest={{ download_dir }}/openam/XUI/templates/common/LoginBaseTemplate.html
 
+- name : Copy over RESTLoginTemplate for skinning the login dialog
+  copy: src=RESTLoginTemplate.html dest={{ download_dir }}/openam/XUI/templates/common/RESTLoginTemplate.html
 
 - name : Update war 
   command: "{{item}}"
