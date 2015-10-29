@@ -42,7 +42,7 @@ java_home: /usr/lib/jvm/java-7-openjdk-amd64
 # TODO: Find a better start script that puts the hostname in /etc/hosts on boot. Vagrant does this for us
 openam_hostname: "iam"
 
-domain_name:digitaltulip.net
+domain_name: digitaltulip.net
 
 ### OpenAM ####
 openam_cookie_domain: ".{{env}}.{{domain_name}}"
