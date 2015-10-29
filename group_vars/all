@@ -42,25 +42,27 @@ java_home: /usr/lib/jvm/java-7-openjdk-amd64
 # TODO: Find a better start script that puts the hostname in /etc/hosts on boot. Vagrant does this for us
 openam_hostname: "iam"
 
+domain_name:digitaltulip.net
+
 ### OpenAM ####
-openam_cookie_domain: ".{{env}}.canopy-cloud.com"
-openam_fqdn: iam.{{env}}.canopy-cloud.com
-portal_fqdn: portal.{{env}}.canopy-cloud.com
+openam_cookie_domain: ".{{env}}.{{domain_name}}"
+openam_fqdn: iam.{{env}}.{{domain_name}}
+portal_fqdn: portal.{{env}}.{{domain_name}}
 
 # Site URL. This is the load balancer URL (haproxy) - not the URL of the openam instance
-openam_site_url: "https://iam.{{env}}.canopy-cloud.com/openam"
+openam_site_url: "https://iam.{{env}}.{{domain_name}}/openam"
 # Port where internal am instance is running
 openam_server_port: 8080 
 
 # OpenAM config location within embedded OpenDJ 
-openam_config_root: "dc={{env}},dc=canopy-cloud,dc=com"
+openam_config_root: "dc={{env}},dc=digitaltulip,dc=net"
 base_user_dn : "cn=Users,{{openam_config_root}}"
 #### OpenDJ #######
 
 # OpenDJ base DN for user data store
-opendj_basedn: "dc={{env}},dc=canopy-cloud,dc=com"
+opendj_basedn: "dc={{env}},dc=digitaltulip,dc=net"
 
-opendj_fqdn: "opendj.{{env}}.canopy-cloud.com"
+opendj_fqdn: "opendj.{{env}}.{{domain_name}}"
 opendj_dirmgr: "cn=Directory Manager" 
 
 # These ovveride opendj role settings
@@ -76,7 +78,7 @@ openam_admin_port: 14444
 openam_jmx_port: 11689
 
 
-ad_host: "ad.{{env}}.canopy-cloud.com"
+ad_host: "ad.{{env}}.{{domain_name}}"
 ad_port: 389
 # Tomcat 
 
@@ -91,7 +93,7 @@ windows_ssh_user: Administrator
 owner_group: tomcat
 
 realm: ActiveDirectory
-circleoftrust: CanopyCloud
+circleoftrust: DigitalTulip
 
 
 ldap_bind_user : "cn=Administrator,cn=Users,{{opendj_basedn}}"

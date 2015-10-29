@@ -18,7 +18,7 @@
         "status": 200,
         "entity": "<html><p><a
                    href='/openid/login?provider=openam&goto=${urlEncode(exchange.request.uri)}'
-                   >Canopy Login</a></p>
+                   >Digital Tulip Login</a></p>
                    <p><a
                    href='/openid/login?provider=google&goto=${urlEncode(exchange.request.uri)}'
                    >Google Login</a></p>
