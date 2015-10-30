@@ -41,13 +41,13 @@
 - name : Copy over LoginBaseTemplate for skinning
   copy: src=LoginBaseTemplate.html dest={{ download_dir }}/openam/XUI/templates/common/LoginBaseTemplate.html
 
-- name : Update war 
-  command: "{{item}}"
-  with_items:
-     - jar -uf {{ download_dir }}/openam/OpenAM-{{openam_version}}.war -C {{ download_dir }}/openam/ XUI/themeConfig.json
-     - jar -uf {{ download_dir }}/openam/OpenAM-{{openam_version}}.war -C {{ download_dir }}/openam/ XUI/images/digitaltulip.png
-     - jar -uf {{ download_dir }}/openam/OpenAM-{{openam_version}}.war -C {{ download_dir }}/openam/ XUI/images/AtosHome.png
-     - jar -uf {{ download_dir }}/openam/OpenAM-{{openam_version}}.war -C {{ download_dir }}/openam/ XUI/templates/common/LoginBaseTemplate.html
+#- name : Update war 
+#  command: "{{item}}"
+#  with_items:
+#     - jar -uf {{ download_dir }}/openam/OpenAM-{{openam_version}}.war -C {{ download_dir }}/openam/ XUI/themeConfig.json
+#     - jar -uf {{ download_dir }}/openam/OpenAM-{{openam_version}}.war -C {{ download_dir }}/openam/ XUI/images/digitaltulip.png
+#     - jar -uf {{ download_dir }}/openam/OpenAM-{{openam_version}}.war -C {{ download_dir }}/openam/ XUI/images/AtosHome.png
+#     - jar -uf {{ download_dir }}/openam/OpenAM-{{openam_version}}.war -C {{ download_dir }}/openam/ XUI/templates/common/LoginBaseTemplate.html
      
 # create install dir, openam dir
 - name: Change owner of install folder to {{ fr_user }}
