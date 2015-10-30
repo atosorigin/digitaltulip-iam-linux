@@ -42,7 +42,7 @@ jenkins: "https://builds.forgerock.org/view"
 
 
 # openidm
-openidm_version: "3.2.0-SNAPSHOT"
+openidm_version: "3.2.0"
 openidm_zip: "openidm-{{openidm_version}}.zip"
 openidm_download_url: "{{jenkins}}/OpenIDM/job/OpenIDM/lastSuccessfulBuild/artifact/openidm-zip/target/{{openidm_zip}}"
 
