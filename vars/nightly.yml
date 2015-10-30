@@ -29,6 +29,7 @@ openam_version: "13.0.0-SNAPSHOT"
 #openam_zip_file: "openam-distribution-kit-{{openam_version}}.zip"
 #openam_download_url: "{{openam_jenkins}}/{{openam_zip_file}}"
 #openam_license_switch: "--acceptLicense"
+openam_configuration_zip: "SSOConfiguratorTools-{{openam_version}}.zip"
 
 # http://download.forgerock.org/downloads/openam/OpenAM-13.0.0-SNAPSHOT_nightly_20150111.zip
 openam_zip_file: "OpenAM-{{openam_version}}_nightly_{{datestamp}}.zip"
