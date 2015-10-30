@@ -4,8 +4,8 @@
 #  the frstack/staging/ directory, and 
 # Edit vars/released.yml with the version info
 #release: nightly
-release: staged
-#release: released
+#release: staged
+release: released
 #release: "maven-released"
 
 # Use a caching proxy server if possible to speed up re-installs
