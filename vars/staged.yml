@@ -38,13 +38,14 @@ openig_download_url: "{{openig_maven}}/{{openig_zip}}"
 
 ## Things that are not in Maven we get from Jenkins
 
-jenkins: "https://builds.forgerock.org/view"
+jenkins: "http://download.forgerock.org"
 
 
 # openidm
-openidm_version: "3.2.0-SNAPSHOT"
+openidm_version: "4.0.0-SNAPSHOT"
 openidm_zip: "openidm-{{openidm_version}}.zip"
-openidm_download_url: "{{jenkins}}/OpenIDM/job/OpenIDM/lastSuccessfulBuild/artifact/openidm-zip/target/{{openidm_zip}}"
+openidm_download_url: "{{jenkins}}/downloads/openidm/snapshot/{{openidm_zip}}"
+
 
 # Agents - cant get them on maven right now - so use Jenkins
 
